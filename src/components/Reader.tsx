@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { dictionary, fallbackDefinition } from '../data/dictionary'
 import type { Reading, VocabularyEntry } from '../types'
 import { cleanTerm } from '../utils/vocabulary'
@@ -66,13 +67,16 @@ export function Reader({ reading, onClose, onTest, onSaveTerm }: { reading: Read
         <button className="primary-button finish-reading" onClick={onTest}>I’ve finished reading →</button>
       </article>
       {selection && <div className="selection-action"><span>“{selection}”</span><button onClick={savePhrase}>Save phrase</button></div>}
-      {activeWord && <div className="sheet-backdrop" onClick={() => setActiveWord('')}><section className="word-sheet" role="dialog" aria-modal="true" aria-labelledby="word-title" onClick={(event) => event.stopPropagation()}>
-        <button className="sheet-close" onClick={() => setActiveWord('')} aria-label="Close definition">×</button>
-        <div className="eyebrow">Word in context</div><h2 id="word-title">{activeWord}</h2>
-        <p className="definition">{definition.definition}</p><p className="example">“{definition.example}”</p>
-        {!showSpanish ? <button className="text-button" onClick={() => setShowSpanish(true)}>Show Spanish</button> : <p className="spanish"><span>Spanish</span>{definition.spanish}</p>}
-        <div className="sheet-actions"><button className="secondary-button" onClick={() => saveWord(true)}>I know it</button><button className="primary-button" onClick={() => saveWord(false)}>Learning</button></div>
-      </section></div>}
+      {activeWord && createPortal(<>
+        <div className="sheet-backdrop" aria-hidden="true" onClick={() => setActiveWord('')} />
+        <section className="word-sheet" role="dialog" aria-modal="true" aria-labelledby="word-title">
+          <button className="sheet-close" onClick={() => setActiveWord('')} aria-label="Close definition">×</button>
+          <div className="eyebrow">Word in context</div><h2 id="word-title">{activeWord}</h2>
+          <p className="definition">{definition.definition}</p><p className="example">“{definition.example}”</p>
+          {!showSpanish ? <button className="text-button" onClick={() => setShowSpanish(true)}>Show Spanish</button> : <p className="spanish"><span>Spanish</span>{definition.spanish}</p>}
+          <div className="sheet-actions"><button className="secondary-button" onClick={() => saveWord(true)}>I know it</button><button className="primary-button" onClick={() => saveWord(false)}>Learning</button></div>
+        </section>
+      </>, document.body)}
       {notice && <div className="toast" role="status">{notice}</div>}
     </main>
   )

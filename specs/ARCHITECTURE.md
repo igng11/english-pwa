@@ -48,6 +48,10 @@ No hay router de URL. `App.tsx` mantiene dos estados:
 
 La navegación principal cambia componentes mediante renderizado condicional. Reader, test y resultado reemplazan temporalmente el shell principal. Esta estrategia es suficiente para el MVP, evita una dependencia y no promete URLs compartibles ni historial del navegador.
 
+## Capas del Reader
+
+El panel de vocabulario se renderiza mediante un portal de React directamente en `document.body`. Así, el backdrop y el bottom sheet `position: fixed` no quedan contenidos por el `transform` de la animación de entrada del Reader. En móvil el panel se fija al borde inferior, respeta las safe areas y usa unidades de viewport dinámico; en escritorio se centra como diálogo.
+
 ## Persistencia
 
 `src/services/db.ts` abre la base `steadily-reader` en versión 1 y crea cuatro object stores:
