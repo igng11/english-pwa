@@ -20,7 +20,18 @@ export default function App() {
   const [activeReading, setActiveReading] = useState<Reading | null>(null)
   const [overlay, setOverlay] = useState<Overlay>(null)
   const [latestScore, setLatestScore] = useState(0)
-  const todayReading = useMemo(() => readings.find((reading) => reading.level === data.recommendedLevel && !data.completedIds.has(reading.id)) ?? readings.find((reading) => reading.level === data.recommendedLevel) ?? readings[0], [data.recommendedLevel, data.completedIds])
+  const todayReading = useMemo(() => {
+    const levelReadings = readings.filter((reading) => reading.level === data.recommendedLevel)
+    const incompleteReading = levelReadings.find((reading) => !data.completedIds.has(reading.id))
+    if (incompleteReading) return incompleteReading
+
+    const resultByReading = new Map(data.results.map((result) => [result.readingId, result]))
+    return [...levelReadings].sort((first, second) => {
+      const firstCompletedAt = resultByReading.get(first.id)?.date ?? ''
+      const secondCompletedAt = resultByReading.get(second.id)?.date ?? ''
+      return firstCompletedAt.localeCompare(secondCompletedAt)
+    })[0] ?? readings[0]
+  }, [data.recommendedLevel, data.completedIds, data.results])
 
   function openReading(reading: Reading) {
     setActiveReading(reading)

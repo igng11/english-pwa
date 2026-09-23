@@ -10,7 +10,7 @@ La actividad principal es leer textos graduados. El vocabulario, las preguntas d
 
 La aplicación tiene cuatro secciones visibles:
 
-- **Today:** recomienda una lectura del nivel actual que todavía no esté completada. Si todas están completadas, reutiliza la primera del nivel.
+- **Today:** recomienda la primera lectura todavía no completada del nivel actual. Si todas están completadas, reutiliza la que lleve más tiempo sin completarse.
 - **Read:** muestra las 11 lecturas y permite filtrar por nivel, tema y estado de finalización.
 - **Words:** organiza vocabulario en Learning, Almost known, Known y Saved phrases.
 - **Progress:** resume nivel recomendado, comprensión media por nivel, lecturas, palabras leídas, sesiones, días activos y vocabulario.
