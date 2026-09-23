@@ -39,11 +39,22 @@ async function put<T>(store: Store, value: T, key?: IDBValidKey): Promise<void> 
   })
 }
 
+async function remove(store: Store, key: IDBValidKey): Promise<void> {
+  const database = await openDatabase()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(store, 'readwrite')
+    tx.objectStore(store).delete(key)
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+  })
+}
+
 export const db = {
   getResults: () => getAll<ReadingResult>('results'),
   saveResult: (result: ReadingResult) => put('results', result),
   getVocabulary: () => getAll<VocabularyEntry>('vocabulary'),
   saveVocabulary: (entry: VocabularyEntry) => put('vocabulary', entry),
+  deleteVocabulary: (term: string) => remove('vocabulary', term),
   getActivity: () => getAll<ActivityEntry>('activity'),
   saveActivity: (entry: ActivityEntry) => put('activity', entry),
   async getSetting<T>(key: string): Promise<T | undefined> {

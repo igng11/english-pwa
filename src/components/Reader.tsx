@@ -10,13 +10,20 @@ function TokenizedParagraph({ text, onWord }: { text: string; onWord: (word: str
   return <p>{text.split(/(\s+)/).map((token, index) => /^\s+$/.test(token) ? token : <button className="reader-word" key={`${token}-${index}`} onClick={() => onWord(token)}>{token}</button>)}</p>
 }
 
-export function Reader({ reading, onClose, onTest, onSaveTerm }: { reading: Reading; onClose: () => void; onTest: () => void; onSaveTerm: (entry: SaveInput, known?: boolean) => Promise<void> }) {
+export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRemoveTerm }: { reading: Reading; vocabulary: VocabularyEntry[]; onClose: () => void; onTest: () => void; onSaveTerm: (entry: SaveInput, known?: boolean) => Promise<void>; onRemoveTerm: (term: string) => Promise<void> }) {
   const [progress, setProgress] = useState(0)
   const [activeWord, setActiveWord] = useState('')
   const [showSpanish, setShowSpanish] = useState(false)
   const [selection, setSelection] = useState('')
   const [notice, setNotice] = useState('')
+  const [confirmRemoval, setConfirmRemoval] = useState(false)
   const definition = useMemo(() => dictionary[activeWord] ?? fallbackDefinition, [activeWord])
+  const savedEntry = useMemo(() => vocabulary.find((entry) => !entry.isPhrase && entry.term === activeWord), [activeWord, vocabulary])
+
+  function closeWordPanel() {
+    setActiveWord('')
+    setConfirmRemoval(false)
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -39,7 +46,14 @@ export function Reader({ reading, onClose, onTest, onSaveTerm }: { reading: Read
   async function saveWord(known: boolean) {
     await onSaveTerm({ term: activeWord, ...definition, isPhrase: false }, known)
     setNotice(known ? 'Marked as known' : 'Added to Learning')
-    setActiveWord('')
+    closeWordPanel()
+    window.setTimeout(() => setNotice(''), 1800)
+  }
+
+  async function removeWord() {
+    await onRemoveTerm(activeWord)
+    setNotice('Removed from vocabulary')
+    closeWordPanel()
     window.setTimeout(() => setNotice(''), 1800)
   }
 
@@ -59,7 +73,7 @@ export function Reader({ reading, onClose, onTest, onSaveTerm }: { reading: Read
         <div className="reader-meta"><span className="level-pill">{reading.level}</span><span>{reading.topic}</span><span>{reading.estimatedMinutes} min</span></div>
         <h1>{reading.title}</h1>
         <p className="reader-hint">Tap a word for a simple definition. Select a longer expression to save it.</p>
-        <div className="article-copy">{reading.text.split('\n\n').map((paragraph) => <TokenizedParagraph key={paragraph.slice(0, 28)} text={paragraph} onWord={(raw) => { const word = cleanTerm(raw); if (word) { setActiveWord(word); setShowSpanish(false) } }} />)}</div>
+        <div className="article-copy">{reading.text.split('\n\n').map((paragraph) => <TokenizedParagraph key={paragraph.slice(0, 28)} text={paragraph} onWord={(raw) => { const word = cleanTerm(raw); if (word) { setActiveWord(word); setShowSpanish(false); setConfirmRemoval(false) } }} />)}</div>
         <aside className="reading-notes">
           <div><span>Target words</span><p>{reading.targetVocabulary.join(' · ')}</p></div>
           <div><span>Grammar in context</span><p>{reading.grammar.map((item) => item.replaceAll('-', ' ')).join(' · ')}</p></div>
@@ -68,13 +82,20 @@ export function Reader({ reading, onClose, onTest, onSaveTerm }: { reading: Read
       </article>
       {selection && <div className="selection-action"><span>“{selection}”</span><button onClick={savePhrase}>Save phrase</button></div>}
       {activeWord && createPortal(<>
-        <div className="sheet-backdrop" aria-hidden="true" onClick={() => setActiveWord('')} />
+        <div className="sheet-backdrop" aria-hidden="true" onClick={closeWordPanel} />
         <section className="word-sheet" role="dialog" aria-modal="true" aria-labelledby="word-title">
-          <button className="sheet-close" onClick={() => setActiveWord('')} aria-label="Close definition">×</button>
+          <button className="sheet-close" onClick={closeWordPanel} aria-label="Close definition">×</button>
           <div className="eyebrow">Word in context</div><h2 id="word-title">{activeWord}</h2>
           <p className="definition">{definition.definition}</p><p className="example">“{definition.example}”</p>
           {!showSpanish ? <button className="text-button" onClick={() => setShowSpanish(true)}>Show Spanish</button> : <p className="spanish"><span>Spanish</span>{definition.spanish}</p>}
           <div className="sheet-actions"><button className="secondary-button" onClick={() => saveWord(true)}>I know it</button><button className="primary-button" onClick={() => saveWord(false)}>Learning</button></div>
+          {savedEntry && <div className="reader-vocabulary-actions">
+            {!confirmRemoval ? <button className="text-button danger-text" onClick={() => setConfirmRemoval(true)}>Remove from vocabulary</button> : <div className="inline-confirmation" role="group" aria-label={`Confirm removal of ${activeWord}`}>
+              <span>Remove this word permanently?</span>
+              <button className="text-button" onClick={() => setConfirmRemoval(false)}>Cancel</button>
+              <button className="danger-button" onClick={removeWord}>Remove</button>
+            </div>}
+          </div>}
         </section>
       </>, document.body)}
       {notice && <div className="toast" role="status">{notice}</div>}

@@ -12,6 +12,7 @@
   --accent-ink: #fffef9;
   --gold: #c78f31;
   --success: #2e6951;
+  --danger: #9d3737;
   --shadow: 0 14px 40px rgba(23, 37, 47, .08);
   font-family: 'DM Sans', system-ui, sans-serif;
   font-synthesis: none;
@@ -29,6 +30,7 @@
   --accent-ink: #132631;
   --gold: #e0ad54;
   --success: #88c7aa;
+  --danger: #f0a0a0;
   --shadow: 0 16px 44px rgba(0, 0, 0, .24);
 }
 
@@ -111,6 +113,12 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .word-stats { display: flex; gap: 20px; color: var(--muted); font-size: .8rem; padding-top: 16px; border-top: 1px solid var(--line); }
 .word-stats strong { color: var(--ink); }
 .status-select { margin-top: 18px; max-width: 190px; }
+.word-card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 20px; }
+.word-card-actions .secondary-button { min-height: 44px; }
+.danger-text { color: var(--danger); }
+.danger-button { min-height: 42px; border: 0; border-radius: 999px; padding: 0 16px; background: var(--danger); color: var(--surface); font-weight: 700; cursor: pointer; }
+.inline-confirmation { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 12px 14px; background: color-mix(in srgb, var(--danger) 9%, var(--surface)); border-left: 3px solid var(--danger); }
+.inline-confirmation span { flex: 1 1 150px; font-size: .86rem; }
 .empty-state { text-align: center; padding: 70px 20px; border: 1px dashed var(--line); color: var(--muted); }
 .empty-state h2 { color: var(--ink); font: 600 1.7rem 'Source Serif 4', serif; }
 .empty-glyph { font: 600 2.2rem 'Source Serif 4', serif; color: var(--gold); margin-bottom: 18px; }
@@ -167,6 +175,7 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .spanish { display: grid; gap: 3px; }
 .spanish span { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
 .sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
+.reader-vocabulary-actions { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
 .selection-action { position: fixed; z-index: 60; left: 50%; bottom: 22px; transform: translateX(-50%); width: min(520px, 90vw); background: var(--ink); color: var(--bg); box-shadow: var(--shadow); padding: 10px 10px 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 10px; }
 .selection-action span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 .9rem 'Source Serif 4', serif; }
 .selection-action button { flex: 0 0 auto; border: 0; border-radius: 999px; padding: 10px 14px; background: var(--gold); color: #15191b; font-weight: 700; cursor: pointer; }

@@ -63,7 +63,7 @@ El panel de vocabulario se renderiza mediante un portal de React directamente en
 | `activity` | `id` | Eventos de lectura y vocabulario |
 | `settings` | clave externa | Nivel recomendado |
 
-La capa ofrece operaciones pequeñas basadas en Promises (`getAll`, `put`, getters y setters específicos). No hay migraciones adicionales ni índices secundarios en la versión actual.
+La capa ofrece operaciones pequeñas basadas en Promises (`getAll`, `put`, `remove`, getters y setters específicos). Cambiar el estado de vocabulario actualiza el registro existente; eliminarlo borra solamente su clave en `vocabulary`, sin tocar resultados de lectura, actividad ni ajustes. No hay migraciones adicionales ni índices secundarios en la versión actual.
 
 ## Progresión
 

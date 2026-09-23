@@ -49,11 +49,16 @@ export function useAppData() {
   async function setTermStatus(term: string, status: VocabularyStatus) {
     const current = vocabulary.find((item) => item.term === term)
     if (!current) return
-    const entry = { ...current, status, lastSeen: new Date().toISOString() }
+    const entry = { ...current, status }
     await db.saveVocabulary(entry)
     setVocabulary((items) => items.map((item) => item.term === term ? entry : item))
   }
 
+  async function removeTerm(term: string) {
+    await db.deleteVocabulary(term)
+    setVocabulary((items) => items.filter((item) => item.term !== term))
+  }
+
   const completedIds = useMemo(() => new Set(results.map((result) => result.readingId)), [results])
-  return { ready, results, vocabulary, recommendedLevel, completedIds, saveResult, saveTerm, setTermStatus }
+  return { ready, results, vocabulary, recommendedLevel, completedIds, saveResult, saveTerm, setTermStatus, removeTerm }
 }

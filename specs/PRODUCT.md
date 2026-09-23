@@ -12,7 +12,7 @@ La aplicación tiene cuatro secciones visibles:
 
 - **Today:** recomienda la primera lectura todavía no completada del nivel actual. Si todas están completadas, reutiliza la que lleve más tiempo sin completarse.
 - **Read:** muestra las 11 lecturas y permite filtrar por nivel, tema y estado de finalización.
-- **Words:** organiza vocabulario en Learning, Almost known, Known y Saved phrases.
+- **Words:** organiza vocabulario en Learning, Almost known, Known y Saved phrases. Cada entrada se puede marcar como conocida conservando su historial o eliminar definitivamente con confirmación.
 - **Progress:** resume nivel recomendado, comprensión media por nivel, lecturas, palabras leídas, sesiones, días activos y vocabulario.
 
 ## Flujo de lectura

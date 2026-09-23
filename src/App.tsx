@@ -50,7 +50,7 @@ export default function App() {
   }
 
   if (!data.ready) return <div className="loading-screen"><div className="brand-mark">S</div><span>Opening your library…</span></div>
-  if (overlay === 'reader' && activeReading) return <Reader reading={activeReading} onClose={() => setOverlay(null)} onTest={() => { setOverlay('test'); window.scrollTo({ top: 0 }) }} onSaveTerm={data.saveTerm} />
+  if (overlay === 'reader' && activeReading) return <Reader reading={activeReading} vocabulary={data.vocabulary} onClose={() => setOverlay(null)} onTest={() => { setOverlay('test'); window.scrollTo({ top: 0 }) }} onSaveTerm={data.saveTerm} onRemoveTerm={data.removeTerm} />
   if (overlay === 'test' && activeReading) return <ComprehensionTest reading={activeReading} onBack={() => setOverlay('reader')} onComplete={finishTest} />
   if (overlay === 'result' && activeReading) return <ResultView reading={activeReading} score={latestScore} onDone={() => { setOverlay(null); setView('progress') }} onReadAgain={() => setOverlay('reader')} />
 
@@ -62,7 +62,7 @@ export default function App() {
         <div className="page-wrap">
           {view === 'today' && <TodayPage reading={todayReading} level={data.recommendedLevel} result={data.results.find((item) => item.readingId === todayReading.id)} onOpen={() => openReading(todayReading)} />}
           {view === 'read' && <ReadPage results={data.results} onOpen={openReading} />}
-          {view === 'words' && <WordsPage vocabulary={data.vocabulary} onStatus={data.setTermStatus} />}
+          {view === 'words' && <WordsPage vocabulary={data.vocabulary} onStatus={data.setTermStatus} onRemove={data.removeTerm} />}
           {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} />}
         </div>
       </div>
