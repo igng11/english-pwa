@@ -39,6 +39,9 @@ Después de la primera carga, la aplicación y las lecturas funcionan sin conexi
 - `src/components/`: lector, test y componentes compartidos.
 - `src/pages/`: Today, Read, Words y Progress.
 - `public/sw.js` y `public/manifest.webmanifest`: instalación y caché offline.
+- `specs/`: documentación consolidada de producto, arquitectura, contenido y PWA.
+
+Documentación detallada: [producto](specs/PRODUCT.md), [arquitectura](specs/ARCHITECTURE.md), [contenido](specs/CONTENT.md) y [PWA](specs/PWA.md).
 
 ## Decisiones del MVP
 
