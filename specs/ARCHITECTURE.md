@@ -52,6 +52,8 @@ La navegación principal cambia componentes mediante renderizado condicional. Re
 
 El panel de vocabulario se renderiza mediante un portal de React directamente en `document.body`. Así, el backdrop y el bottom sheet `position: fixed` no quedan contenidos por el `transform` de la animación de entrada del Reader. En móvil el panel se fija al borde inferior, respeta las safe areas y usa unidades de viewport dinámico; en escritorio se centra como diálogo.
 
+Las palabras del texto son spans seleccionables con semántica y acceso por teclado, no botones nativos, para no interferir con la selección de texto de iOS/Safari. Un tap sin selección abre el panel de palabra. La selección de frases se observa mediante `selectionchange` y `window.getSelection()`, se limita al cuerpo de la lectura y requiere dos o más palabras. Esto permite que la acción `Save phrase` se actualice también al mover los handles nativos después de una pulsación larga.
+
 ## Persistencia
 
 `src/services/db.ts` abre la base `steadily-reader` en versión 1 y crea cuatro object stores:

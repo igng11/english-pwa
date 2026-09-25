@@ -158,7 +158,7 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .reader-hint { color: var(--muted); border-left: 2px solid var(--gold); padding-left: 14px; line-height: 1.5; margin-bottom: 48px; }
 .article-copy { user-select: text; }
 .article-copy p { font: 400 clamp(1.2rem, 2.7vw, 1.38rem)/1.86 'Source Serif 4', serif; margin-bottom: 1.65em; }
-.reader-word { display: inline; appearance: none; border: 0; margin: 0; padding: 0; color: inherit; background: transparent; font: inherit; line-height: inherit; cursor: pointer; text-align: left; }
+.reader-word { display: inline; margin: 0; padding: 0; color: inherit; background: transparent; font: inherit; line-height: inherit; cursor: pointer; text-align: left; -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 .reader-word:hover { background: color-mix(in srgb, var(--gold) 25%, transparent); }
 .reading-notes { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 24px 0; margin-top: 52px; display: grid; gap: 20px; }
 .reading-notes span { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
@@ -169,14 +169,14 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 @keyframes sheet-up { from { transform: translateY(30px); opacity: 0; } }
 .sheet-close { position: absolute; right: 18px; top: 16px; width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); border: 0; cursor: pointer; font-size: 1.5rem; }
 .word-sheet h2 { font: 600 2.4rem 'Source Serif 4', serif; margin-bottom: 14px; }
-.word-sheet .definition { font: 400 1.25rem/1.5 'Source Serif 4', serif; }
+.word-sheet .definition { font: 400 1.25rem/1.5 'Source Serif 4', serif; margin-top: 18px; }
 .word-sheet .example { color: var(--muted); line-height: 1.6; }
 .text-button { color: var(--gold); font-weight: 700; }
-.spanish { display: grid; gap: 3px; }
+.spanish { display: grid; gap: 3px; font: 600 1.15rem/1.45 'Source Serif 4', serif; }
 .spanish span { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
 .sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
 .reader-vocabulary-actions { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
-.selection-action { position: fixed; z-index: 60; left: 50%; bottom: 22px; transform: translateX(-50%); width: min(520px, 90vw); background: var(--ink); color: var(--bg); box-shadow: var(--shadow); padding: 10px 10px 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 10px; }
+.selection-action { position: fixed; z-index: 70; left: 50%; bottom: max(22px, calc(env(safe-area-inset-bottom, 0px) + 12px)); transform: translateX(-50%); width: min(520px, calc(100vw - 24px)); background: var(--ink); color: var(--bg); box-shadow: var(--shadow); padding: 10px 10px 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 10px; }
 .selection-action span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 .9rem 'Source Serif 4', serif; }
 .selection-action button { flex: 0 0 auto; border: 0; border-radius: 999px; padding: 10px 14px; background: var(--gold); color: #15191b; font-weight: 700; cursor: pointer; }
 .toast { position: fixed; z-index: 100; left: 50%; bottom: 28px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 999px; box-shadow: var(--shadow); }

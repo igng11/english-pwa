@@ -19,10 +19,12 @@ La aplicación tiene cuatro secciones visibles:
 
 1. El usuario abre una lectura desde Today o Read.
 2. El Reader muestra el contenido en una columna enfocada y calcula el avance según el scroll.
-3. Cada palabra se puede tocar para ver una definición simple en inglés, un ejemplo y, bajo demanda, la traducción al español.
-4. Una selección de varias palabras se puede guardar como frase.
+3. Cada palabra se puede tocar para ver, en este orden, la traducción al español, una definición simple en inglés y un ejemplo en inglés.
+4. Una selección nativa de dos o más palabras muestra la acción `Save phrase` y se puede guardar completa.
 5. Al finalizar se responden tres preguntas de opción múltiple.
 6. El resultado sustituye el resultado anterior de esa lectura y actualiza la recomendación de nivel.
+
+Para el nivel A2 la estrategia actual muestra la traducción española inmediatamente para reducir fricción, conservando también la definición inglesa. En el futuro se podría ofrecer un modo opcional `English-first`, pero no forma parte del producto actual.
 
 ## Alcance actual
 
