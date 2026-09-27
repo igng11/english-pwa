@@ -11,13 +11,14 @@ La PWA está implementada manualmente con APIs del navegador. No usa `vite-plugi
 
 ## Service worker
 
-`public/sw.js` usa un único caché llamado `steadily-v1`.
+`public/sw.js` usa un único caché versionado, actualmente `steadily-v2`.
 
-- **install:** precachea `/`, `index.html`, manifest e iconos y activa inmediatamente mediante `skipWaiting`.
-- **activate:** elimina cachés con nombres distintos y toma control de clientes mediante `clients.claim`.
-- **fetch:** para solicitudes GET aplica cache-first; si no existe una respuesta, usa la red y guarda una copia. Si falla una navegación, devuelve `index.html`.
+- **install:** precachea `/`, `index.html`, manifest e iconos; además lee el `index.html` generado para descubrir y precachear los bundles JavaScript/CSS con hash. Luego activa inmediatamente mediante `skipWaiting`.
+- **activate:** elimina cachés con nombres distintos y toma control mediante `clients.claim`. Si reemplazó un caché anterior de Steadily, recarga una vez los clientes abiertos para que dejen de ejecutar el bundle viejo; una primera instalación no provoca esa recarga.
+- **fetch de navegación:** aplica network-first, actualiza la copia de `index.html` y usa la copia local como fallback offline. Esto evita que un HTML antiguo siga apuntando indefinidamente al bundle de un deploy anterior.
+- **otros fetch GET:** aplica cache-first; si no existe una respuesta, usa la red y guarda las respuestas correctas.
 
-El JavaScript y CSS con hash producidos por Vite no aparecen en la lista inicial, pero se guardan mediante la estrategia de runtime cache durante la primera carga. Por eso la aplicación funciona offline después de una primera carga completa.
+Los nombres de JavaScript y CSS cambian en cada build, por lo que el service worker los descubre desde el HTML en vez de mantener una lista manual. Así quedan disponibles offline incluso cuando la primera carga ocurrió antes de que el worker tomara control de la página.
 
 ## Decisión sobre `vite-plugin-pwa`
 
@@ -27,7 +28,7 @@ Por ese motivo se conserva la implementación manual. Si el número de rutas o a
 
 ## Mantenimiento
 
-- Incrementar el nombre `steadily-v1` cuando cambie de manera incompatible la estrategia o el contenido precacheado.
+- Incrementar el nombre del caché cuando cambie de manera incompatible la estrategia o el contenido precacheado.
 - Mantener el manifest y los iconos en `public/`.
 - Verificar offline sobre un build de producción servido por HTTPS o localhost; el modo `npm run dev` no registra el service worker.
 - No almacenar datos personales en Cache Storage: el progreso pertenece a IndexedDB.
