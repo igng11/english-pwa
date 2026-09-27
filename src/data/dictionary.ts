@@ -1,6 +1,10 @@
+import { cleanTerm } from '../utils/vocabulary'
+import { readings } from './readings'
+import { spanishTranslations } from './translations-es'
+
 export interface Definition { definition: string; spanish: string; example: string }
 
-export const dictionary: Record<string, Definition> = {
+const curatedDictionary: Record<string, Definition> = {
   update: { definition: 'to make something more modern or useful', spanish: 'actualizar', example: 'I update my phone once a month.' },
   updates: { definition: 'new versions of software that fix or improve it', spanish: 'actualizaciones', example: 'Phone updates can fix problems and improve security.' },
   device: { definition: 'a piece of electronic equipment', spanish: 'dispositivo', example: 'This small device helps me work.' },
@@ -45,6 +49,36 @@ export const dictionary: Record<string, Definition> = {
   neighborhood: { definition: 'an area of a town where people live', spanish: 'barrio', example: 'Our neighborhood has a small park.' },
   volunteer: { definition: 'to work without being paid to help', spanish: 'ser voluntario', example: 'I volunteer at the library on Saturdays.' },
   belong: { definition: 'to feel accepted as part of a group', spanish: 'pertenecer', example: 'The club helped her feel that she belonged.' },
+}
+
+const readingExamples = new Map<string, string>()
+
+for (const reading of readings) {
+  for (const sentence of reading.text.match(/[^.!?]+[.!?]?/g) ?? []) {
+    const example = sentence.trim()
+    for (const token of example.split(/\s+/)) {
+      const term = cleanTerm(token)
+      if (term && !readingExamples.has(term)) readingExamples.set(term, example)
+    }
+  }
+}
+
+const coveredReadingDictionary = Object.fromEntries(
+  [...readingExamples].flatMap(([term, example]) => {
+    const spanish = spanishTranslations[term]
+    if (!spanish) return []
+
+    return [[term, {
+      definition: `used in this reading with the meaning “${spanish}”`,
+      spanish,
+      example,
+    } satisfies Definition]]
+  }),
+) as Record<string, Definition>
+
+export const dictionary: Record<string, Definition> = {
+  ...coveredReadingDictionary,
+  ...curatedDictionary,
 }
 
 export const fallbackDefinition: Definition = {

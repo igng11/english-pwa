@@ -8,5 +8,9 @@ export function getVocabularyStatus(seenCount: number, successCount: number): Vo
 }
 
 export function cleanTerm(value: string) {
-  return value.trim().replace(/^[^a-zA-Z']+|[^a-zA-Z']+$/g, '').toLowerCase()
+  return value
+    .trim()
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/^[^\p{L}']+|[^\p{L}']+$/gu, '')
+    .toLowerCase()
 }

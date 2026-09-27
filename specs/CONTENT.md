@@ -2,7 +2,7 @@
 
 ## Fuente y separación
 
-Las lecturas viven en `src/data/readings.ts` como objetos TypeScript, fuera de los componentes. El diccionario local vive en `src/data/dictionary.ts`. No se descarga contenido y no existe una API de contenido.
+Las lecturas viven en `src/data/readings.ts` como objetos TypeScript, fuera de los componentes. El diccionario local se compone en `src/data/dictionary.ts`; las equivalencias contextuales en español viven en `src/data/translations-es.ts`. No se descarga contenido y no existe una API de contenido.
 
 ## Modelo de lectura
 
@@ -43,9 +43,11 @@ El diccionario mapea una palabra normalizada a:
 - traducción al español;
 - ejemplo en inglés.
 
-`cleanTerm` elimina puntuación exterior y normaliza a minúsculas. Si una palabra no existe en el diccionario, el Reader presenta una ayuda contextual genérica; no consulta servicios externos.
+`cleanTerm` unifica apóstrofos tipográficos, conserva letras Unicode, elimina puntuación exterior y normaliza a minúsculas. Si una palabra no existe en el diccionario, el Reader presenta una ayuda contextual genérica; no consulta servicios externos.
 
-Las 33 palabras objetivo del dataset tienen definición, traducción española y ejemplo. El diccionario también puede incluir formas frecuentes que aparecen literalmente en las lecturas, como `updates`, y palabras comunes útiles como `she`; estas entradas son explícitas y locales, no traducciones generadas dinámicamente.
+Las 11 lecturas actuales contienen 868 formas únicas después de esa normalización. Todas tienen traducción española local. Las 44 entradas pedagógicas seleccionadas conservan su definición y ejemplo redactados manualmente; para el resto, `dictionary.ts` combina la equivalencia española explícita con una definición breve y la primera oración real que contiene la forma como ejemplo. El fallback queda reservado para vocabulario de lecturas futuras todavía no incorporado al dataset.
+
+Las 33 palabras objetivo del dataset tienen definición, traducción española y ejemplo curados. El diccionario también incluye formas que aparecen literalmente en las lecturas, como `updates`, palabras funcionales como `she` y nombres propios. No se generan traducciones durante el uso de la app: todo el español está incluido en el bundle local y funciona offline.
 
 ## Frases
 
