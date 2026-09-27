@@ -2,8 +2,10 @@ export interface Definition { definition: string; spanish: string; example: stri
 
 export const dictionary: Record<string, Definition> = {
   update: { definition: 'to make something more modern or useful', spanish: 'actualizar', example: 'I update my phone once a month.' },
+  updates: { definition: 'new versions of software that fix or improve it', spanish: 'actualizaciones', example: 'Phone updates can fix problems and improve security.' },
   device: { definition: 'a piece of electronic equipment', spanish: 'dispositivo', example: 'This small device helps me work.' },
   although: { definition: 'despite the fact that', spanish: 'aunque', example: 'Although I was tired, I continued reading.' },
+  she: { definition: 'a female person or animal already mentioned', spanish: 'ella', example: 'She checked her messages before breakfast.' },
   routine: { definition: 'the usual way you do things', spanish: 'rutina', example: 'Reading is part of my evening routine.' },
   focus: { definition: 'to give attention to one thing', spanish: 'concentrarse', example: 'I focus better in a quiet room.' },
   improve: { definition: 'to become or make something better', spanish: 'mejorar', example: 'Daily practice can improve your English.' },

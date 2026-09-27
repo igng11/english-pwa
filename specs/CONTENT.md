@@ -45,6 +45,8 @@ El diccionario mapea una palabra normalizada a:
 
 `cleanTerm` elimina puntuación exterior y normaliza a minúsculas. Si una palabra no existe en el diccionario, el Reader presenta una ayuda contextual genérica; no consulta servicios externos.
 
+Las 33 palabras objetivo del dataset tienen definición, traducción española y ejemplo. El diccionario también puede incluir formas frecuentes que aparecen literalmente en las lecturas, como `updates`, y palabras comunes útiles como `she`; estas entradas son explícitas y locales, no traducciones generadas dinámicamente.
+
 ## Frases
 
 Las selecciones de más de una palabra y menos de 140 caracteres se guardan completas. Se identifican mediante `isPhrase` y aparecen en Saved phrases. La implementación no reduce la expresión a una palabra base.
