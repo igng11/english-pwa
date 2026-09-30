@@ -171,6 +171,11 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .word-sheet h2 { font: 600 2.4rem 'Source Serif 4', serif; margin-bottom: 14px; }
 .word-sheet .definition { font: 400 1.25rem/1.5 'Source Serif 4', serif; margin-top: 18px; }
 .word-sheet .example { color: var(--muted); line-height: 1.6; }
+.word-audio-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: -2px 0 20px; }
+.word-audio-actions button, .sentence-audio-button { min-height: 44px; border: 1px solid var(--line); border-radius: 999px; background: transparent; padding: 0 16px; font-weight: 700; cursor: pointer; }
+.word-audio-actions button { display: inline-flex; align-items: center; gap: 7px; }
+.sentence-audio-button { display: inline-flex; align-items: center; gap: 8px; margin-top: 2px; color: var(--accent); }
+.word-audio-actions button:hover, .sentence-audio-button:hover { background: var(--surface-2); }
 .text-button { color: var(--gold); font-weight: 700; }
 .spanish { display: grid; gap: 3px; font: 600 1.15rem/1.45 'Source Serif 4', serif; }
 .spanish span { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }

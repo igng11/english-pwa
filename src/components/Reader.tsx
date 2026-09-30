@@ -5,24 +5,75 @@ import type { Reading, VocabularyEntry } from '../types'
 import { cleanTerm } from '../utils/vocabulary'
 
 type SaveInput = Omit<VocabularyEntry, 'seenCount' | 'successCount' | 'lastSeen' | 'status'>
+type WordSelection = { word: string; sentence: string }
 
-function TokenizedParagraph({ text, onWord }: { text: string; onWord: (word: string) => void }) {
-  return <p>{text.split(/(\s+)/).map((token, index) => /^\s+$/.test(token) ? token : <span className="reader-word" role="button" tabIndex={0} key={`${token}-${index}`} onClick={() => onWord(token)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onWord(token) } }}>{token}</span>)}</p>
+function sentenceAt(text: string, offset: number) {
+  const sentences = [...text.matchAll(/[^.!?]+(?:[.!?]+|$)/g)]
+  return sentences.find((sentence) => {
+    const start = sentence.index
+    return start <= offset && offset < start + sentence[0].length
+  })?.[0].trim() ?? text.trim()
+}
+
+function TokenizedParagraph({ text, onWord }: { text: string; onWord: (selection: WordSelection) => void }) {
+  let offset = 0
+
+  return <p>{text.split(/(\s+)/).map((token, index) => {
+    const tokenOffset = offset
+    offset += token.length
+    if (/^\s+$/.test(token)) return token
+
+    const selection = { word: token, sentence: sentenceAt(text, tokenOffset) }
+    return <span className="reader-word" role="button" tabIndex={0} key={`${token}-${index}`} onClick={() => onWord(selection)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onWord(selection) } }}>{token}</span>
+  })}</p>
 }
 
 export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRemoveTerm }: { reading: Reading; vocabulary: VocabularyEntry[]; onClose: () => void; onTest: () => void; onSaveTerm: (entry: SaveInput, known?: boolean) => Promise<void>; onRemoveTerm: (term: string) => Promise<void> }) {
   const [progress, setProgress] = useState(0)
   const [activeWord, setActiveWord] = useState('')
+  const [activeSentence, setActiveSentence] = useState('')
   const [selection, setSelection] = useState('')
   const [notice, setNotice] = useState('')
   const [confirmRemoval, setConfirmRemoval] = useState(false)
   const articleCopyRef = useRef<HTMLDivElement>(null)
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
   const definition = useMemo(() => dictionary[activeWord] ?? fallbackDefinition, [activeWord])
   const savedEntry = useMemo(() => vocabulary.find((entry) => !entry.isPhrase && entry.term === activeWord), [activeWord, vocabulary])
+  const speechSupported = typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
+
+  function cancelSpeech() {
+    if (!speechSupported) return
+    window.speechSynthesis.cancel()
+    utteranceRef.current = null
+  }
+
+  function speak(text: string, rate: number) {
+    if (!speechSupported || !text) return
+
+    cancelSpeech()
+    const utterance = new SpeechSynthesisUtterance(text)
+    const voices = window.speechSynthesis.getVoices()
+    utterance.lang = 'en-US'
+    utterance.rate = rate
+    utterance.voice = voices.find((voice) => voice.lang.toLowerCase().startsWith('en-us'))
+      ?? voices.find((voice) => voice.lang.toLowerCase().startsWith('en'))
+      ?? null
+    utterance.onend = () => { if (utteranceRef.current === utterance) utteranceRef.current = null }
+    utterance.onerror = () => { if (utteranceRef.current === utterance) utteranceRef.current = null }
+    utteranceRef.current = utterance
+    window.speechSynthesis.speak(utterance)
+  }
 
   function closeWordPanel() {
+    cancelSpeech()
     setActiveWord('')
+    setActiveSentence('')
     setConfirmRemoval(false)
+  }
+
+  function closeReader() {
+    cancelSpeech()
+    onClose()
   }
 
   useEffect(() => {
@@ -35,6 +86,11 @@ export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRem
     update()
     return () => window.removeEventListener('scroll', update)
   }, [])
+
+  useEffect(() => () => {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel()
+    utteranceRef.current = null
+  }, [reading.id])
 
   useEffect(() => {
     const handleSelectionChange = () => {
@@ -53,13 +109,15 @@ export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRem
     return () => document.removeEventListener('selectionchange', handleSelectionChange)
   }, [])
 
-  function openWord(raw: string) {
+  function openWord(selection: WordSelection) {
     const nativeSelection = window.getSelection()
     if (nativeSelection && !nativeSelection.isCollapsed) return
-    const word = cleanTerm(raw)
+    const word = cleanTerm(selection.word)
     if (!word) return
+    cancelSpeech()
     setSelection('')
     setActiveWord(word)
+    setActiveSentence(selection.sentence)
     setConfirmRemoval(false)
   }
 
@@ -88,7 +146,7 @@ export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRem
   return (
     <main className="reader-page page-enter">
       <div className="reader-progress" aria-label={`${progress}% of article read`}><span style={{ width: `${progress}%` }} /></div>
-      <header className="reader-toolbar"><button className="back-button" onClick={onClose}>← Library</button><span>{progress}% read</span></header>
+      <header className="reader-toolbar"><button className="back-button" onClick={closeReader}>← Library</button><span>{progress}% read</span></header>
       <article className="reader-article">
         <div className="reader-meta"><span className="level-pill">{reading.level}</span><span>{reading.topic}</span><span>{reading.estimatedMinutes} min</span></div>
         <h1>{reading.title}</h1>
@@ -106,8 +164,13 @@ export function Reader({ reading, vocabulary, onClose, onTest, onSaveTerm, onRem
         <section className="word-sheet" role="dialog" aria-modal="true" aria-labelledby="word-title">
           <button className="sheet-close" onClick={closeWordPanel} aria-label="Close definition">×</button>
           <div className="eyebrow">Word in context</div><h2 id="word-title">{activeWord}</h2>
+          {speechSupported && <div className="word-audio-actions" aria-label="Pronunciation controls">
+            <button type="button" aria-label="Listen to pronunciation" onClick={() => speak(activeWord, 1)}><span aria-hidden="true">🔊</span> Listen</button>
+            <button type="button" aria-label="Listen slowly" onClick={() => speak(activeWord, 0.7)}>Slow</button>
+          </div>}
           <p className="spanish"><span>Spanish</span>{definition.spanish}</p>
           <p className="definition">{definition.definition}</p><p className="example">“{definition.example}”</p>
+          {speechSupported && <button type="button" className="sentence-audio-button" aria-label="Listen to sentence" onClick={() => speak(activeSentence, 0.9)}><span aria-hidden="true">🔊</span> Listen to sentence</button>}
           <div className="sheet-actions"><button className="secondary-button" onClick={() => saveWord(true)}>I know it</button><button className="primary-button" onClick={() => saveWord(false)}>Learning</button></div>
           {savedEntry && <div className="reader-vocabulary-actions">
             {!confirmRemoval ? <button className="text-button danger-text" onClick={() => setConfirmRemoval(true)}>Remove from vocabulary</button> : <div className="inline-confirmation" role="group" aria-label={`Confirm removal of ${activeWord}`}>

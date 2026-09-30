@@ -33,6 +33,10 @@ Los temas presentes son Technology, Programming, Work, Business, Daily Life, Tra
 
 La longitud normal objetivo de una lectura es de 220 a 260 palabras. No debe crecer progresivamente solo porque sube el nivel: la dificultad debe aumentar principalmente mediante el vocabulario, las estructuras y la comprensión, no mediante textos mucho más largos.
 
+La segunda lectura del corpus actual representa aproximadamente el punto de partida práctico deseado según el uso real. El usuario comprende la mayoría de las palabras por separado, pero necesita más exposición a combinaciones naturales de vocabulario conocido, collocations, phrasal patterns sencillos, conectores y estructuras que todavía no produce espontáneamente. Las lecturas futuras no deben reducir artificialmente la dificultad hacia textos demasiado básicos.
+
+El progreso debe aumentar principalmente mediante esas combinaciones, conectores, estructuras gramaticales gradualmente más ricas y comprensión contextual. La longitud objetivo continúa siendo 220–260 palabras y no debe usarse como mecanismo principal de dificultad.
+
 Se incorporarán progresivamente lecturas inspiradas en noticias y acontecimientos actuales. Deben redactarse o adaptarse como material educativo para A2/B1, nunca copiar artículos periodísticos. Por ahora seguirán formando parte del contenido local para conservar la arquitectura offline, sin APIs ni conexiones externas.
 
 ## Diccionario
