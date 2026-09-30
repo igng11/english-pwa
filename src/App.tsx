@@ -6,6 +6,7 @@ import { Reader } from './components/Reader'
 import { ResultView } from './components/ResultView'
 import { readings, countWords } from './data/readings'
 import { useAppData } from './hooks/useAppData'
+import { useSpeechSynthesis } from './hooks/useSpeechSynthesis'
 import { ProgressPage } from './pages/ProgressPage'
 import { ReadPage } from './pages/ReadPage'
 import { TodayPage } from './pages/TodayPage'
@@ -16,6 +17,7 @@ type Overlay = 'reader' | 'test' | 'result' | null
 
 export default function App() {
   const data = useAppData()
+  const speech = useSpeechSynthesis(data.voicePreference, data.saveVoicePreference)
   const [view, setView] = useState<View>('today')
   const [activeReading, setActiveReading] = useState<Reading | null>(null)
   const [overlay, setOverlay] = useState<Overlay>(null)
@@ -50,7 +52,7 @@ export default function App() {
   }
 
   if (!data.ready) return <div className="loading-screen"><div className="brand-mark">S</div><span>Opening your library…</span></div>
-  if (overlay === 'reader' && activeReading) return <Reader reading={activeReading} vocabulary={data.vocabulary} onClose={() => setOverlay(null)} onTest={() => { setOverlay('test'); window.scrollTo({ top: 0 }) }} onSaveTerm={data.saveTerm} onRemoveTerm={data.removeTerm} />
+  if (overlay === 'reader' && activeReading) return <Reader reading={activeReading} vocabulary={data.vocabulary} speech={speech} onClose={() => setOverlay(null)} onTest={() => { setOverlay('test'); window.scrollTo({ top: 0 }) }} onSaveTerm={data.saveTerm} onRemoveTerm={data.removeTerm} />
   if (overlay === 'test' && activeReading) return <ComprehensionTest reading={activeReading} onBack={() => setOverlay('reader')} onComplete={finishTest} />
   if (overlay === 'result' && activeReading) return <ResultView reading={activeReading} score={latestScore} onDone={() => { setOverlay(null); setView('progress') }} onReadAgain={() => setOverlay('reader')} />
 
@@ -63,7 +65,7 @@ export default function App() {
           {view === 'today' && <TodayPage reading={todayReading} level={data.recommendedLevel} result={data.results.find((item) => item.readingId === todayReading.id)} onOpen={() => openReading(todayReading)} />}
           {view === 'read' && <ReadPage results={data.results} onOpen={openReading} />}
           {view === 'words' && <WordsPage vocabulary={data.vocabulary} onStatus={data.setTermStatus} onRemove={data.removeTerm} />}
-          {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} />}
+          {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} speech={speech} />}
         </div>
       </div>
     </div>

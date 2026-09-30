@@ -145,6 +145,17 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .vocab-summary div { border-left: 3px solid var(--gold); padding: 7px 14px; display: grid; }
 .vocab-summary strong { font: 600 1.8rem 'Source Serif 4', serif; }
 .vocab-summary span { color: var(--muted); font-size: .78rem; }
+.voice-settings { position: relative; }
+.voice-settings > label { display: block; margin-bottom: 7px; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.voice-settings select { width: 100%; }
+.voice-count, .current-voice, .voice-unavailable { color: var(--muted); line-height: 1.5; }
+.voice-count { margin-bottom: 20px; }
+.current-voice { margin: 16px 0 0; font-size: .84rem; }
+.current-voice strong { color: var(--ink); }
+.voice-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.voice-actions button { min-width: 120px; }
+.secondary-button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.voice-notice { position: absolute; right: 20px; bottom: 20px; margin: 0; color: var(--success); font-size: .8rem; font-weight: 700; }
 
 .reader-page { min-height: 100vh; background: var(--bg); padding-bottom: 80px; }
 .reader-progress { position: fixed; z-index: 50; left: 0; top: 0; right: 0; height: 3px; background: var(--surface-2); }
@@ -238,6 +249,9 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
   .card-footer { flex-direction: column; }
   .vocab-summary { grid-template-columns: 1fr; }
   .word-stats { flex-wrap: wrap; }
+  .voice-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .voice-actions button { min-width: 0; }
+  .voice-notice { position: static; margin-top: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

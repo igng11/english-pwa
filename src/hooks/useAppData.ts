@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { db } from '../services/db'
-import type { Level, ReadingResult, VocabularyEntry, VocabularyStatus } from '../types'
+import type { Level, ReadingResult, VoicePreference, VocabularyEntry, VocabularyStatus } from '../types'
 import { getRecommendedLevel } from '../utils/progression'
 import { getVocabularyStatus } from '../utils/vocabulary'
 
@@ -8,14 +8,16 @@ export function useAppData() {
   const [results, setResults] = useState<ReadingResult[]>([])
   const [vocabulary, setVocabulary] = useState<VocabularyEntry[]>([])
   const [recommendedLevel, setRecommendedLevel] = useState<Level>('A2.1')
+  const [voicePreference, setVoicePreference] = useState<VoicePreference>()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    Promise.all([db.getResults(), db.getVocabulary(), db.getSetting<Level>('recommendedLevel')])
-      .then(([storedResults, storedVocabulary, storedLevel]) => {
+    Promise.all([db.getResults(), db.getVocabulary(), db.getSetting<Level>('recommendedLevel'), db.getSetting<VoicePreference>('voicePreference')])
+      .then(([storedResults, storedVocabulary, storedLevel, storedVoicePreference]) => {
         setResults(storedResults)
         setVocabulary(storedVocabulary)
         setRecommendedLevel(storedLevel ?? 'A2.1')
+        setVoicePreference(storedVoicePreference)
       })
       .finally(() => setReady(true))
   }, [])
@@ -59,6 +61,11 @@ export function useAppData() {
     setVocabulary((items) => items.filter((item) => item.term !== term))
   }
 
+  async function saveVoicePreference(preference: VoicePreference) {
+    await db.setSetting('voicePreference', preference)
+    setVoicePreference(preference)
+  }
+
   const completedIds = useMemo(() => new Set(results.map((result) => result.readingId)), [results])
-  return { ready, results, vocabulary, recommendedLevel, completedIds, saveResult, saveTerm, setTermStatus, removeTerm }
+  return { ready, results, vocabulary, recommendedLevel, voicePreference, completedIds, saveResult, saveTerm, setTermStatus, removeTerm, saveVoicePreference }
 }

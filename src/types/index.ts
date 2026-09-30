@@ -49,4 +49,10 @@ export interface ActivityEntry {
   kind: 'reading' | 'vocabulary'
 }
 
+export interface VoicePreference {
+  voiceURI: string
+  name: string
+  lang: string
+}
+
 export type View = 'today' | 'read' | 'words' | 'progress'

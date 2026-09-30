@@ -1,8 +1,10 @@
 import { readings, countWords } from '../data/readings'
+import { VoiceSettings } from '../components/VoiceSettings'
+import type { SpeechController } from '../hooks/useSpeechSynthesis'
 import type { Level, ReadingResult, VocabularyEntry } from '../types'
 import { LEVELS } from '../utils/progression'
 
-export function ProgressPage({ level, results, vocabulary }: { level: Level; results: ReadingResult[]; vocabulary: VocabularyEntry[] }) {
+export function ProgressPage({ level, results, vocabulary, speech }: { level: Level; results: ReadingResult[]; vocabulary: VocabularyEntry[]; speech: SpeechController }) {
   const byLevel = LEVELS.map((item) => {
     const scores = results.filter((result) => result.level === item).map((result) => result.percentage)
     return { level: item, score: scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0, count: scores.length }
@@ -19,6 +21,7 @@ export function ProgressPage({ level, results, vocabulary }: { level: Level; res
       <section className="progress-section"><div className="section-title"><h2>Comprehension by level</h2><span>Average score</span></div><div className="level-bars">{byLevel.map((item) => <div className="level-bar" key={item.level}><span>{item.level}</span><div><i style={{ width: `${item.score}%` }} /></div><strong>{item.count ? `${item.score}%` : '—'}</strong></div>)}</div></section>
       <section className="stat-grid"><article><span>Readings</span><strong>{results.length}</strong><small>completed</small></article><article><span>Words read</span><strong>{wordsRead.toLocaleString()}</strong><small>across all texts</small></article><article><span>Sessions</span><strong>{results.length}</strong><small>reading sessions</small></article><article><span>Active days</span><strong>{activeDays}</strong><small>days with a result</small></article></section>
       <section className="progress-section"><div className="section-title"><h2>Vocabulary</h2></div><div className="vocab-summary"><div><strong>{known}</strong><span>Known</span></div><div><strong>{learning}</strong><span>Learning</span></div><div><strong>{phrases}</strong><span>Saved phrases</span></div></div></section>
+      <VoiceSettings speech={speech} />
     </main>
   )
 }

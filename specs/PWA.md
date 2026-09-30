@@ -32,3 +32,11 @@ Por ese motivo se conserva la implementación manual. Si el número de rutas o a
 - Mantener el manifest y los iconos en `public/`.
 - Verificar offline sobre un build de producción servido por HTTPS o localhost; el modo `npm run dev` no registra el service worker.
 - No almacenar datos personales en Cache Storage: el progreso pertenece a IndexedDB.
+
+## Pronunciación nativa
+
+El Reader usa exclusivamente Web Speech API (`speechSynthesis` y `SpeechSynthesisUtterance`); no descarga audio ni consulta servicios externos. La configuración Voice en Progress muestra solamente las voces inglesas que `speechSynthesis.getVoices()` expone en el dispositivo y escucha `voiceschanged`, porque Safari/iOS puede completar esa lista de manera asíncrona.
+
+La voz elegida se guarda en el object store `settings` de IndexedDB mediante `voiceURI` y, como respaldo, `name + lang`. Cada utterance asigna explícitamente el objeto de voz resuelto y su locale. Palabra, oración y preview pasan por la misma función, usan velocidad natural `1` y cancelan cualquier reproducción anterior.
+
+Las voces instaladas o descargadas en iOS no siempre coinciden con las que WebKit expone a una PWA. Si la voz guardada deja de estar disponible, la aplicación usa una voz inglesa marcada como default, luego una `en-US` o finalmente la primera voz inglesa disponible. Si la API o una voz inglesa no están disponibles, los controles de audio no se muestran y el flujo de lectura continúa sin errores visibles.

@@ -35,7 +35,9 @@ specs/            Documentación técnica y de producto
 
 ## Estado y flujo de datos
 
-`useAppData` carga resultados, vocabulario y nivel recomendado al iniciar. Expone operaciones para guardar resultados, guardar vocabulario y cambiar estados. Los componentes no acceden directamente a IndexedDB.
+`useAppData` carga resultados, vocabulario, nivel recomendado y preferencia de voz al iniciar. Expone operaciones para guardar resultados, guardar vocabulario, cambiar estados y persistir la voz. Los componentes no acceden directamente a IndexedDB.
+
+`useSpeechSynthesis` centraliza la lista asíncrona de voces inglesas, la resolución de la preferencia guardada y todas las reproducciones de palabra, oración y preview. Reader y Voice Settings consumen el mismo controlador, por lo que no mantienen implementaciones de speech independientes.
 
 El contenido estático entra desde `src/data/readings.ts` y `src/data/dictionary.ts`. Los tipos compartidos están en `src/types/index.ts`. Las reglas puras se mantienen en `src/utils/`.
 
@@ -63,7 +65,7 @@ Las palabras del texto son spans seleccionables con semántica y acceso por tecl
 | `results` | `id` | Último resultado de cada lectura |
 | `vocabulary` | `term` | Palabras y frases guardadas |
 | `activity` | `id` | Eventos de lectura y vocabulario |
-| `settings` | clave externa | Nivel recomendado |
+| `settings` | clave externa | Nivel recomendado y preferencia de voz |
 
 La capa ofrece operaciones pequeñas basadas en Promises (`getAll`, `put`, `remove`, getters y setters específicos). Cambiar el estado de vocabulario actualiza el registro existente; eliminarlo borra solamente su clave en `vocabulary`, sin tocar resultados de lectura, actividad ni ajustes. No hay migraciones adicionales ni índices secundarios en la versión actual.
 
