@@ -64,7 +64,7 @@ export default function App() {
         <div className="page-wrap">
           {view === 'today' && <TodayPage reading={todayReading} level={data.recommendedLevel} result={data.results.find((item) => item.readingId === todayReading.id)} onOpen={() => openReading(todayReading)} />}
           {view === 'read' && <ReadPage results={data.results} onOpen={openReading} />}
-          {view === 'words' && <WordsPage vocabulary={data.vocabulary} onStatus={data.setTermStatus} onRemove={data.removeTerm} />}
+          {view === 'words' && <WordsPage vocabulary={data.vocabulary} speech={speech} onStatus={data.setTermStatus} onRemove={data.removeTerm} />}
           {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} activity={data.activity} speech={speech} getData={data.getPersistentData} onRestore={data.restorePersistentData} />}
         </div>
       </div>
