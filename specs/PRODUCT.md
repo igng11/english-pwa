@@ -13,8 +13,8 @@ La aplicación tiene cuatro secciones visibles:
 - **Today:** recomienda la primera lectura todavía no completada del nivel actual. Si todas están completadas, reutiliza la que lleve más tiempo sin completarse.
 - **Read:** muestra las 11 lecturas y permite filtrar por nivel, tema y estado de finalización.
 - **Words:** abre en Learning y ofrece filtros compactos para Learning, Almost known, Known, All y Phrases. Cada entrada muestra primero palabra, traducción y estado; al expandir una única fila aparecen contexto, pronunciación con la voz elegida, métricas resumidas y las acciones para marcar como conocida o eliminar con confirmación. Las definiciones genéricas y el selector manual de estado no forman parte de esta vista de repaso.
-- **Progress:** resume nivel recomendado, comprensión media por nivel, lecturas, palabras leídas, sesiones, días activos y vocabulario; además incluye calendario de lecturas, voz y backup local.
-- **Voice en Progress:** permite escuchar y elegir una de las voces inglesas que el dispositivo expone a la PWA, con persistencia local.
+- **Progress:** abre como dashboard compacto con nivel de lectura recomendado, racha real hacia el siguiente nivel, resumen semanal, camino por los niveles disponibles, calendario, comprensión por nivel y acceso directo a Words.
+- **Settings dentro de Progress:** una vista secundaria, sin tab propia, contiene Voice y Backup. Permite elegir una voz inglesa expuesta por el dispositivo y exportar o restaurar los datos locales con las implementaciones existentes.
 
 ## Flujo de lectura
 

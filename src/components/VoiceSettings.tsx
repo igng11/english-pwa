@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { SpeechController } from '../hooks/useSpeechSynthesis'
 import { voiceIdentifier } from '../hooks/useSpeechSynthesis'
 
-export function VoiceSettings({ speech }: { speech: SpeechController }) {
+export function VoiceSettings({ speech, title = 'Voice' }: { speech: SpeechController; title?: string }) {
   const [candidateId, setCandidateId] = useState('')
   const [notice, setNotice] = useState('')
   const selectedId = speech.selectedVoice ? voiceIdentifier(speech.selectedVoice) : ''
@@ -26,7 +26,7 @@ export function VoiceSettings({ speech }: { speech: SpeechController }) {
 
   return (
     <section className="progress-section voice-settings" aria-labelledby="voice-settings-title">
-      <div className="section-title"><h2 id="voice-settings-title">Voice</h2><span>English pronunciation</span></div>
+      <div className="section-title"><h2 id="voice-settings-title">{title}</h2><span>English pronunciation</span></div>
       <p className="voice-count">Available voices on this device: {speech.voices.length}</p>
       {speech.supported ? <>
         <label htmlFor="voice-select">Voice</label>

@@ -13,7 +13,7 @@ function downloadFile(file: File) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-export function BackupData({ getData, onRestore }: { getData: () => PersistedData; onRestore: (data: PersistedData) => Promise<void> }) {
+export function BackupData({ getData, onRestore, title = 'Backup data' }: { getData: () => PersistedData; onRestore: (data: PersistedData) => Promise<void>; title?: string }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [pending, setPending] = useState<BackupDocument | null>(null)
   const [notice, setNotice] = useState('')
@@ -64,7 +64,7 @@ export function BackupData({ getData, onRestore }: { getData: () => PersistedDat
 
   return (
     <section className="progress-section backup-section" aria-labelledby="backup-title">
-      <div className="section-title"><h2 id="backup-title">Backup data</h2><span>Local JSON file</span></div>
+      <div className="section-title"><h2 id="backup-title">{title}</h2><span>Local JSON file</span></div>
       <p className="backup-copy">Export your local progress or restore a compatible backup on this device.</p>
       <div className="backup-actions">
         <button className="secondary-button" type="button" onClick={exportProgress}>Export progress</button>

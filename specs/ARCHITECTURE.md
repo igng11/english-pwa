@@ -77,6 +77,10 @@ Regla permanente: ningún cambio futuro de esquema puede borrar stores ni regist
 
 ## Progresión
 
+Progress presenta la misma regla de progresión sin convertirla en un porcentaje artificial. El indicador de tres puntos cuenta la racha final de resultados del nivel recomendado con comprensión mayor o igual a 80%; cualquier resultado inferior reinicia visualmente esa racha. `getRecommendedLevel` continúa siendo la única función que decide cambios de nivel.
+
+El resumen semanal usa la semana local de lunes a domingo. Las lecturas y días activos provienen de eventos `reading` en `activity`; las palabras se suman por evento usando el tamaño de su lectura; y la comprensión promedia sólo los resultados persistidos cuya fecha cae dentro de esa semana. Como `results` conserva el último resultado por ID de lectura, la interfaz no inventa puntuaciones históricas que ya no existen.
+
 `src/utils/progression.ts` define el orden `A2.1 → A2.2 → A2.3 → A2.4`.
 
 Para el nivel recomendado actual:

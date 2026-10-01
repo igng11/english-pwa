@@ -65,7 +65,7 @@ export default function App() {
           {view === 'today' && <TodayPage reading={todayReading} level={data.recommendedLevel} result={data.results.find((item) => item.readingId === todayReading.id)} onOpen={() => openReading(todayReading)} />}
           {view === 'read' && <ReadPage results={data.results} onOpen={openReading} />}
           {view === 'words' && <WordsPage vocabulary={data.vocabulary} speech={speech} onStatus={data.setTermStatus} onRemove={data.removeTerm} />}
-          {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} activity={data.activity} speech={speech} getData={data.getPersistentData} onRestore={data.restorePersistentData} />}
+          {view === 'progress' && <ProgressPage level={data.recommendedLevel} results={data.results} vocabulary={data.vocabulary} activity={data.activity} speech={speech} getData={data.getPersistentData} onRestore={data.restorePersistentData} onOpenWords={() => { setView('words'); window.scrollTo({ top: 0 }) }} />}
         </div>
       </div>
     </div>
