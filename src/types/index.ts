@@ -4,7 +4,9 @@ export type VocabularyStatus = 'learning' | 'almost-known' | 'known'
 
 export interface Question {
   question: string
+  questionEs: string
   options: [string, string, string]
+  optionsEs: [string, string, string]
   correctIndex: number
 }
 
@@ -47,6 +49,28 @@ export interface ActivityEntry {
   id: string
   date: string
   kind: 'reading' | 'vocabulary'
+  localDate?: string
+  readingId?: string
+}
+
+export interface SettingEntry {
+  key: string
+  value: unknown
+}
+
+export interface PersistedData {
+  results: ReadingResult[]
+  vocabulary: VocabularyEntry[]
+  activity: ActivityEntry[]
+  settings: SettingEntry[]
+}
+
+export interface BackupDocument {
+  app: 'english-pwa'
+  backupVersion: 1
+  databaseVersion: number
+  exportedAt: string
+  data: PersistedData
 }
 
 export interface VoicePreference {

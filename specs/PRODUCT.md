@@ -13,16 +13,16 @@ La aplicación tiene cuatro secciones visibles:
 - **Today:** recomienda la primera lectura todavía no completada del nivel actual. Si todas están completadas, reutiliza la que lleve más tiempo sin completarse.
 - **Read:** muestra las 11 lecturas y permite filtrar por nivel, tema y estado de finalización.
 - **Words:** organiza vocabulario en Learning, Almost known, Known y Saved phrases. Cada entrada se puede marcar como conocida conservando su historial o eliminar definitivamente con confirmación.
-- **Progress:** resume nivel recomendado, comprensión media por nivel, lecturas, palabras leídas, sesiones, días activos y vocabulario.
+- **Progress:** resume nivel recomendado, comprensión media por nivel, lecturas, palabras leídas, sesiones, días activos y vocabulario; además incluye calendario de lecturas, voz y backup local.
 - **Voice en Progress:** permite escuchar y elegir una de las voces inglesas que el dispositivo expone a la PWA, con persistencia local.
 
 ## Flujo de lectura
 
 1. El usuario abre una lectura desde Today o Read.
 2. El Reader muestra el contenido en una columna enfocada y calcula el avance según el scroll.
-3. Cada palabra se puede tocar para escucharla y ver, en este orden, la traducción al español, una definición simple en inglés y un ejemplo en inglés. También se puede escuchar la oración real que la contiene; ambas reproducciones usan la misma voz elegida.
+3. Cada palabra se puede tocar para escucharla y ver, en este orden, la traducción al español, una definición simple en inglés y un ejemplo en inglés. También se puede escuchar la oración real que la contiene y solicitar su traducción contextual; ambas reproducciones usan la misma voz elegida.
 4. Una selección nativa de dos o más palabras muestra la acción `Save phrase` y se puede guardar completa.
-5. Al finalizar se responden tres preguntas de opción múltiple.
+5. Al finalizar se responden tres preguntas de opción múltiple. Cada pregunta permanece inicialmente en inglés y permite revelar localmente la pregunta y sus opciones en español.
 6. El resultado sustituye el resultado anterior de esa lectura y actualiza la recomendación de nivel.
 
 Para el nivel A2 la estrategia actual muestra la traducción española inmediatamente para reducir fricción, conservando también la definición inglesa. En el futuro se podría ofrecer un modo opcional `English-first`, pero no forma parte del producto actual.
@@ -36,6 +36,8 @@ Para el nivel A2 la estrategia actual muestra la traducción española inmediata
 - Temas claro y oscuro, con preferencia inicial basada en `prefers-color-scheme`.
 - Diseño mobile-first con navegación inferior en móvil y lateral en escritorio.
 - Pronunciación de palabra y oración mediante la voz inglesa seleccionada de Web Speech API, sin audio externo.
+- Exportación e importación de todos los datos persistentes mediante un JSON versionado.
+- Calendario sobrio basado en eventos históricos de finalización, sin puntos ni recompensas.
 
 ## Fuera de alcance
 

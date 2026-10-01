@@ -15,5 +15,6 @@ These rules are permanent constraints for work in this repository.
 - Preserve accessibility: semantic HTML, keyboard access, visible focus, adequate contrast, and practical touch targets.
 - Keep progression, vocabulary rules, and persistence behind their current dedicated modules so they can evolve independently.
 - Do not block access to readings based on level recommendations.
+- Never delete existing user data as part of a schema change. Every IndexedDB schema change must use an explicit, forward-only migration that preserves existing stores and records.
 
 Before completing a change, run the available typecheck and production build. Update the relevant file in `specs/` when a change materially affects the documented system.

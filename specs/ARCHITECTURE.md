@@ -64,10 +64,16 @@ Las palabras del texto son spans seleccionables con semántica y acceso por tecl
 | --- | --- | --- |
 | `results` | `id` | Último resultado de cada lectura |
 | `vocabulary` | `term` | Palabras y frases guardadas |
-| `activity` | `id` | Eventos de lectura y vocabulario |
+| `activity` | `id` | Eventos históricos de lectura y vocabulario |
 | `settings` | clave externa | Nivel recomendado y preferencia de voz |
 
-La capa ofrece operaciones pequeñas basadas en Promises (`getAll`, `put`, `remove`, getters y setters específicos). Cambiar el estado de vocabulario actualiza el registro existente; eliminarlo borra solamente su clave en `vocabulary`, sin tocar resultados de lectura, actividad ni ajustes. No hay migraciones adicionales ni índices secundarios en la versión actual.
+La capa ofrece operaciones pequeñas basadas en Promises (`getAll`, `put`, `remove`, getters y setters específicos). Cambiar el estado de vocabulario actualiza el registro existente; eliminarlo borra solamente su clave en `vocabulary`, sin tocar resultados de lectura, actividad ni ajustes. La versión de IndexedDB continúa siendo `1`; no fue necesario modificar stores para estas funciones.
+
+Cada finalización crea desde ahora un evento `reading` con ID único, timestamp, `readingId` y fecha local estable. Los eventos heredados con ID fijo se conservan. Al cargar, si un resultado contiene una fecha fiable que no existe en `activity`, se agrega un único evento recuperado; no se inventan sesiones que los datos anteriores ya no permiten reconstruir.
+
+Backup usa `backupVersion: 1` y exporta `results`, `vocabulary`, `activity` y todas las entradas de `settings`. Restore valida el documento y reemplaza los cuatro stores dentro de una sola transacción read-write: IndexedDB confirma todos los cambios o revierte la transacción completa.
+
+Regla permanente: ningún cambio futuro de esquema puede borrar stores ni registros existentes. Un aumento de versión debe implementar una migración explícita y progresiva en `onupgradeneeded`.
 
 ## Progresión
 

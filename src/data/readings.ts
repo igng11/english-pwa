@@ -12,9 +12,9 @@ Although updates are helpful, it is smart to prepare first. Connect the phone to
 
 You do not always need the newest phone. A regular update can help an older device work well for longer. This saves money and also creates less electronic waste. The next time your phone shows an update message, read the information, prepare your device, and choose a convenient time to install it.`,
     questions: [
-      { question: 'Why do updates make phones safer?', options: ['They protect information from new dangers', 'They make the screen larger', 'They remove the battery'], correctIndex: 0 },
-      { question: 'What should you do before a large update?', options: ['Delete every contact', 'Save important photos and contacts', 'Buy a new phone'], correctIndex: 1 },
-      { question: 'How can updates help the environment?', options: ['They use more data', 'They make phones heavier', 'They help older devices last longer'], correctIndex: 2 },
+      { question: 'Why do updates make phones safer?', questionEs: '¿Por qué las actualizaciones hacen que los teléfonos sean más seguros?', options: ['They protect information from new dangers', 'They make the screen larger', 'They remove the battery'], optionsEs: ['Protegen la información de nuevos peligros', 'Hacen que la pantalla sea más grande', 'Quitan la batería'], correctIndex: 0 },
+      { question: 'What should you do before a large update?', questionEs: '¿Qué deberías hacer antes de una actualización importante?', options: ['Delete every contact', 'Save important photos and contacts', 'Buy a new phone'], optionsEs: ['Borrar todos los contactos', 'Guardar fotos y contactos importantes', 'Comprar un teléfono nuevo'], correctIndex: 1 },
+      { question: 'How can updates help the environment?', questionEs: '¿Cómo pueden las actualizaciones ayudar al medioambiente?', options: ['They use more data', 'They make phones heavier', 'They help older devices last longer'], optionsEs: ['Usan más datos', 'Hacen que los teléfonos sean más pesados', 'Ayudan a que los dispositivos antiguos duren más'], correctIndex: 2 },
     ],
   },
   {
@@ -28,9 +28,9 @@ The new routine was not perfect from the first day. Sometimes Marta still looked
 
 Marta learned that a better morning does not require waking up at five or following a long list of rules. A few simple actions can make a clear difference. Now she changes only one habit at a time and gives herself enough time to practise it.`,
     questions: [
-      { question: 'Why did Marta put her phone across the room?', options: ['To charge it faster', 'To make herself get out of bed', 'To hide it from visitors'], correctIndex: 1 },
-      { question: 'What did she prepare at night?', options: ['Breakfast and her work bag', 'A taxi and some water', 'Her office tasks'], correctIndex: 0 },
-      { question: 'What lesson did Marta learn?', options: ['Only difficult plans work', 'She must wake at five', 'Small changes can improve a morning'], correctIndex: 2 },
+      { question: 'Why did Marta put her phone across the room?', questionEs: '¿Por qué Marta puso el teléfono al otro lado de la habitación?', options: ['To charge it faster', 'To make herself get out of bed', 'To hide it from visitors'], optionsEs: ['Para cargarlo más rápido', 'Para obligarse a levantarse de la cama', 'Para esconderlo de las visitas'], correctIndex: 1 },
+      { question: 'What did she prepare at night?', questionEs: '¿Qué preparaba por la noche?', options: ['Breakfast and her work bag', 'A taxi and some water', 'Her office tasks'], optionsEs: ['El desayuno y su bolso de trabajo', 'Un taxi y un poco de agua', 'Sus tareas de oficina'], correctIndex: 0 },
+      { question: 'What lesson did Marta learn?', questionEs: '¿Qué lección aprendió Marta?', options: ['Only difficult plans work', 'She must wake at five', 'Small changes can improve a morning'], optionsEs: ['Sólo funcionan los planes difíciles', 'Debe despertarse a las cinco', 'Los pequeños cambios pueden mejorar una mañana'], correctIndex: 2 },
     ],
   },
   {
@@ -44,9 +44,9 @@ On Wednesday, his manager helped him create a simple schedule. Leo began work at
 
 By Friday, Leo felt more comfortable. Remote work still required planning, but he enjoyed the quiet time for creative tasks. He also understood that work-life balance does not happen automatically at home. A clear schedule, regular breaks, and a separate work space helped him finish the week with energy for his friends and hobbies.`,
     questions: [
-      { question: 'Where did Leo work on his first day?', options: ['At the kitchen table', 'In a city café', 'At his manager’s house'], correctIndex: 0 },
-      { question: 'Why did he work late at first?', options: ['His laptop was broken', 'He had no clear finish time', 'He started after lunch'], correctIndex: 1 },
-      { question: 'What helped Leo’s work-life balance?', options: ['More video meetings', 'Loud music', 'A clear schedule and regular breaks'], correctIndex: 2 },
+      { question: 'Where did Leo work on his first day?', questionEs: '¿Dónde trabajó Leo durante su primer día?', options: ['At the kitchen table', 'In a city café', 'At his manager’s house'], optionsEs: ['En la mesa de la cocina', 'En un café de la ciudad', 'En la casa de su gerente'], correctIndex: 0 },
+      { question: 'Why did he work late at first?', questionEs: '¿Por qué al principio trabajaba hasta tarde?', options: ['His laptop was broken', 'He had no clear finish time', 'He started after lunch'], optionsEs: ['Su computadora portátil estaba rota', 'No tenía una hora clara para terminar', 'Empezaba después del almuerzo'], correctIndex: 1 },
+      { question: 'What helped Leo’s work-life balance?', questionEs: '¿Qué ayudó a Leo a equilibrar el trabajo y la vida personal?', options: ['More video meetings', 'Loud music', 'A clear schedule and regular breaks'], optionsEs: ['Más reuniones por video', 'Música fuerte', 'Un horario claro y descansos regulares'], correctIndex: 2 },
     ],
   },
   {
@@ -60,9 +60,9 @@ She found a local bookshop in a narrow street. The owner showed her photographs 
 
 None of these places appeared in Nora’s travel guide. At dinner, she realized that the unplanned day was her favorite part of the weekend. Planning can save time and prevent problems, but it can also make us hurry. Now Nora leaves one free day in every trip. She still makes lists, but she also gives herself time to follow local advice and discover something unexpected.`,
     questions: [
-      { question: 'Why was the boat journey cancelled?', options: ['The island was closed', 'There was heavy rain', 'Nora was late'], correctIndex: 1 },
-      { question: 'Who suggested the old streets?', options: ['The café owner', 'A boat driver', 'Nora’s guide'], correctIndex: 0 },
-      { question: 'How did the experience change Nora’s travel style?', options: ['She stopped travelling', 'She only visits islands', 'She now leaves a free day'], correctIndex: 2 },
+      { question: 'Why was the boat journey cancelled?', questionEs: '¿Por qué se canceló el viaje en barco?', options: ['The island was closed', 'There was heavy rain', 'Nora was late'], optionsEs: ['La isla estaba cerrada', 'Llovía intensamente', 'Nora llegó tarde'], correctIndex: 1 },
+      { question: 'Who suggested the old streets?', questionEs: '¿Quién sugirió visitar las calles antiguas?', options: ['The café owner', 'A boat driver', 'Nora’s guide'], optionsEs: ['El dueño del café', 'Un conductor de barco', 'El guía de Nora'], correctIndex: 0 },
+      { question: 'How did the experience change Nora’s travel style?', questionEs: '¿Cómo cambió la experiencia la forma de viajar de Nora?', options: ['She stopped travelling', 'She only visits islands', 'She now leaves a free day'], optionsEs: ['Dejó de viajar', 'Sólo visita islas', 'Ahora deja un día libre'], correctIndex: 2 },
     ],
   },
   {
@@ -78,9 +78,9 @@ The library has also become a place where people meet. Volunteers repair broken 
 
 The Library of Things cannot replace every shop, and popular items are sometimes unavailable. Still, it gives people another option: before buying something new, they can ask whether borrowing is enough.`,
     questions: [
-      { question: 'Why did Maya borrow a drill?', options: ['She wanted to sell it', 'She only needed it a few times', 'Her neighbor lost one'], correctIndex: 1 },
-      { question: 'How does sharing equipment reduce waste?', options: ['Fewer objects need to be produced', 'Objects become smaller', 'The library closes cupboards'], correctIndex: 0 },
-      { question: 'What else happens at the library?', options: ['People repair objects and share advice', 'People buy new cars', 'People take school exams'], correctIndex: 0 },
+      { question: 'Why did Maya borrow a drill?', questionEs: '¿Por qué Maya pidió prestado un taladro?', options: ['She wanted to sell it', 'She only needed it a few times', 'Her neighbor lost one'], optionsEs: ['Quería venderlo', 'Sólo lo necesitaba unas pocas veces', 'Su vecino perdió uno'], correctIndex: 1 },
+      { question: 'How does sharing equipment reduce waste?', questionEs: '¿Cómo reduce los residuos compartir equipos?', options: ['Fewer objects need to be produced', 'Objects become smaller', 'The library closes cupboards'], optionsEs: ['Es necesario producir menos objetos', 'Los objetos se vuelven más pequeños', 'La biblioteca cierra armarios'], correctIndex: 0 },
+      { question: 'What else happens at the library?', questionEs: '¿Qué más sucede en la biblioteca?', options: ['People repair objects and share advice', 'People buy new cars', 'People take school exams'], optionsEs: ['La gente repara objetos y comparte consejos', 'La gente compra autos nuevos', 'La gente rinde exámenes escolares'], correctIndex: 0 },
     ],
   },
   {
@@ -96,9 +96,9 @@ The next morning, Sam spoke to one of the workers. The mysterious machine was a 
 
 Sam was relieved, although he also felt a little foolish. Lina laughed and said that they had solved a modern mystery. Eventually, the repairs finished and people moved into the building. Sam never saw the blue light again.`,
     questions: [
-      { question: 'Why was the apartment building empty?', options: ['Workers were repairing it', 'It was a train station', 'Everyone was at dinner'], correctIndex: 0 },
-      { question: 'What produced the blue light?', options: ['A television', 'A mapping robot', 'A police car'], correctIndex: 1 },
-      { question: 'How did Sam feel after learning the truth?', options: ['Angry and tired', 'Relieved and a little foolish', 'Still frightened'], correctIndex: 1 },
+      { question: 'Why was the apartment building empty?', questionEs: '¿Por qué estaba vacío el edificio de apartamentos?', options: ['Workers were repairing it', 'It was a train station', 'Everyone was at dinner'], optionsEs: ['Los trabajadores lo estaban reparando', 'Era una estación de tren', 'Todos estaban cenando'], correctIndex: 0 },
+      { question: 'What produced the blue light?', questionEs: '¿Qué producía la luz azul?', options: ['A television', 'A mapping robot', 'A police car'], optionsEs: ['Un televisor', 'Un robot que hacía mapas', 'Un auto de policía'], correctIndex: 1 },
+      { question: 'How did Sam feel after learning the truth?', questionEs: '¿Cómo se sintió Sam después de conocer la verdad?', options: ['Angry and tired', 'Relieved and a little foolish', 'Still frightened'], optionsEs: ['Enojado y cansado', 'Aliviado y un poco tonto', 'Todavía asustado'], correctIndex: 1 },
     ],
   },
   {
@@ -114,9 +114,9 @@ Their first solution fixed the immediate bug, but Ana suggested a second step. T
 
 The team did not blame the person who wrote the original code. Instead, they wrote a short report about what happened and shared it with the whole company. The bug taught them that good software depends on clear questions, varied testing, and a team where new members feel comfortable speaking.`,
     questions: [
-      { question: 'When did events move to the wrong date?', options: ['At lunch', 'At midnight', 'Every Friday'], correctIndex: 1 },
-      { question: 'What caused the bug?', options: ['Different time zones', 'A broken phone screen', 'Too many users'], correctIndex: 0 },
-      { question: 'What did the team add after fixing it?', options: ['More calendar colors', 'Automatic tests for different places and times', 'A new manager'], correctIndex: 1 },
+      { question: 'When did events move to the wrong date?', questionEs: '¿Cuándo pasaban los eventos a la fecha equivocada?', options: ['At lunch', 'At midnight', 'Every Friday'], optionsEs: ['A la hora del almuerzo', 'A medianoche', 'Todos los viernes'], correctIndex: 1 },
+      { question: 'What caused the bug?', questionEs: '¿Qué causó el error?', options: ['Different time zones', 'A broken phone screen', 'Too many users'], optionsEs: ['Las diferentes zonas horarias', 'La pantalla rota de un teléfono', 'Demasiados usuarios'], correctIndex: 0 },
+      { question: 'What did the team add after fixing it?', questionEs: '¿Qué agregó el equipo después de corregirlo?', options: ['More calendar colors', 'Automatic tests for different places and times', 'A new manager'], optionsEs: ['Más colores para el calendario', 'Pruebas automáticas para distintos lugares y horarios', 'Un gerente nuevo'], correctIndex: 1 },
     ],
   },
   {
@@ -132,9 +132,9 @@ This time, the response was much better. People could clean the lid quickly, and
 
 The team learned that feedback is not just a final check. It is most useful when there is still time to make changes. A short delay before launch can prevent a much larger problem afterward.`,
     questions: [
-      { question: 'What was difficult to clean?', options: ['The lid', 'The bicycle', 'The rough band'], correctIndex: 0 },
-      { question: 'Why had the team missed the problems?', options: ['They never saw the mug', 'They all used it in the same way', 'Customers hid the feedback'], correctIndex: 1 },
-      { question: 'What happened after the delayed launch?', options: ['Sales were strong', 'The company closed', 'Everyone returned the mug'], correctIndex: 0 },
+      { question: 'What was difficult to clean?', questionEs: '¿Qué era difícil de limpiar?', options: ['The lid', 'The bicycle', 'The rough band'], optionsEs: ['La tapa', 'La bicicleta', 'La banda áspera'], correctIndex: 0 },
+      { question: 'Why had the team missed the problems?', questionEs: '¿Por qué el equipo no había detectado los problemas?', options: ['They never saw the mug', 'They all used it in the same way', 'Customers hid the feedback'], optionsEs: ['Nunca vieron la taza', 'Todos la usaban de la misma manera', 'Los clientes ocultaron sus comentarios'], correctIndex: 1 },
+      { question: 'What happened after the delayed launch?', questionEs: '¿Qué ocurrió después del lanzamiento retrasado?', options: ['Sales were strong', 'The company closed', 'Everyone returned the mug'], optionsEs: ['Las ventas fueron buenas', 'La empresa cerró', 'Todos devolvieron la taza'], correctIndex: 0 },
     ],
   },
   {
@@ -150,9 +150,9 @@ The café has repaired more than four hundred objects in two years. This helps r
 
 Not every object can be saved. Some machines require special parts, and dangerous repairs must go to professionals. The volunteers are clear about these limits. Bruno now helps at the welcome table. He cannot repair everything, but he can make tea, label objects, and help new visitors feel comfortable.`,
     questions: [
-      { question: 'How is the repair café different from a normal shop?', options: ['Visitors help with the repair', 'It only repairs cars', 'Everything is new'], correctIndex: 0 },
-      { question: 'What was wrong with Bruno’s toaster?', options: ['It had no bread', 'It had a loose wire', 'It was too large'], correctIndex: 1 },
-      { question: 'Why is learning important at the café?', options: ['People can care for objects better', 'People can sell more tea', 'Children can leave school'], correctIndex: 0 },
+      { question: 'How is the repair café different from a normal shop?', questionEs: '¿En qué se diferencia el café de reparaciones de una tienda normal?', options: ['Visitors help with the repair', 'It only repairs cars', 'Everything is new'], optionsEs: ['Los visitantes ayudan con la reparación', 'Sólo repara autos', 'Todo es nuevo'], correctIndex: 0 },
+      { question: 'What was wrong with Bruno’s toaster?', questionEs: '¿Qué problema tenía la tostadora de Bruno?', options: ['It had no bread', 'It had a loose wire', 'It was too large'], optionsEs: ['No tenía pan', 'Tenía un cable suelto', 'Era demasiado grande'], correctIndex: 1 },
+      { question: 'Why is learning important at the café?', questionEs: '¿Por qué es importante aprender en el café?', options: ['People can care for objects better', 'People can sell more tea', 'Children can leave school'], optionsEs: ['La gente puede cuidar mejor los objetos', 'La gente puede vender más té', 'Los niños pueden dejar la escuela'], correctIndex: 0 },
     ],
   },
   {
@@ -168,9 +168,9 @@ On the festival day, strong wind arrived in the morning. Volunteers tied the dec
 
 The new place changed the event. There was room for dancing, and visitors could sit near the river. When the square reopened, the committee faced another choice. In the end, they decided to use both locations: a small opening concert in the traditional square and the main celebration in the park. The temporary solution had created a new tradition without removing the old one.`,
     questions: [
-      { question: 'Why could the festival not use the square?', options: ['It needed major repairs', 'Music was forbidden', 'The park was closed'], correctIndex: 0 },
-      { question: 'What problem happened on festival morning?', options: ['The river flooded', 'Strong wind arrived', 'The bands forgot the music'], correctIndex: 1 },
-      { question: 'What did the committee finally decide?', options: ['To cancel future festivals', 'To return only to the square', 'To use the square and the park'], correctIndex: 2 },
+      { question: 'Why could the festival not use the square?', questionEs: '¿Por qué el festival no podía usar la plaza?', options: ['It needed major repairs', 'Music was forbidden', 'The park was closed'], optionsEs: ['Necesitaba reparaciones importantes', 'La música estaba prohibida', 'El parque estaba cerrado'], correctIndex: 0 },
+      { question: 'What problem happened on festival morning?', questionEs: '¿Qué problema ocurrió la mañana del festival?', options: ['The river flooded', 'Strong wind arrived', 'The bands forgot the music'], optionsEs: ['El río se desbordó', 'Llegó un viento fuerte', 'Las bandas olvidaron la música'], correctIndex: 1 },
+      { question: 'What did the committee finally decide?', questionEs: '¿Qué decidió finalmente el comité?', options: ['To cancel future festivals', 'To return only to the square', 'To use the square and the park'], optionsEs: ['Cancelar los festivales futuros', 'Volver solamente a la plaza', 'Usar la plaza y el parque'], correctIndex: 2 },
     ],
   },
   {
@@ -186,9 +186,9 @@ Afterward, three colleagues said they had used her research method. Their feedba
 
 Six months later, Elena presented a campaign idea to an important client. She explained the plan clearly and answered unexpected questions. The client accepted the idea. Elena had not become a perfect speaker, and she still prepared carefully. She had learned something more useful: confidence often grows after action, not before it. If she waited until she felt completely ready, she might never begin.`,
     questions: [
-      { question: 'What skill did Elena teach first?', options: ['Organizing online research', 'Designing buildings', 'Speaking another language'], correctIndex: 0 },
-      { question: 'How did she change her notes?', options: ['She wrote a longer script', 'She used only key words', 'She removed every note'], correctIndex: 1 },
-      { question: 'What did Elena learn about confidence?', options: ['It can grow after taking action', 'It arrives without practice', 'Only managers can give it'], correctIndex: 0 },
+      { question: 'What skill did Elena teach first?', questionEs: '¿Qué habilidad enseñó Elena primero?', options: ['Organizing online research', 'Designing buildings', 'Speaking another language'], optionsEs: ['Organizar investigaciones en línea', 'Diseñar edificios', 'Hablar otro idioma'], correctIndex: 0 },
+      { question: 'How did she change her notes?', questionEs: '¿Cómo cambió sus notas?', options: ['She wrote a longer script', 'She used only key words', 'She removed every note'], optionsEs: ['Escribió un guion más largo', 'Usó solamente palabras clave', 'Eliminó todas las notas'], correctIndex: 1 },
+      { question: 'What did Elena learn about confidence?', questionEs: '¿Qué aprendió Elena sobre la confianza?', options: ['It can grow after taking action', 'It arrives without practice', 'Only managers can give it'], optionsEs: ['Puede crecer después de actuar', 'Llega sin práctica', 'Sólo los gerentes pueden darla'], correctIndex: 0 },
     ],
   },
 ]

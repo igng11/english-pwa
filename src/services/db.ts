@@ -1,7 +1,7 @@
-import type { ActivityEntry, ReadingResult, VocabularyEntry } from '../types'
+import type { ActivityEntry, PersistedData, ReadingResult, SettingEntry, VocabularyEntry } from '../types'
 
 const DB_NAME = 'steadily-reader'
-const DB_VERSION = 1
+export const DB_VERSION = 1
 
 type Store = 'results' | 'vocabulary' | 'activity' | 'settings'
 
@@ -49,14 +49,71 @@ async function remove(store: Store, key: IDBValidKey): Promise<void> {
   })
 }
 
+async function getSettings(): Promise<SettingEntry[]> {
+  const database = await openDatabase()
+  return new Promise((resolve, reject) => {
+    const entries: SettingEntry[] = []
+    const request = database.transaction('settings', 'readonly').objectStore('settings').openCursor()
+    request.onsuccess = () => {
+      const cursor = request.result
+      if (!cursor) {
+        resolve(entries)
+        return
+      }
+      entries.push({ key: String(cursor.key), value: cursor.value })
+      cursor.continue()
+    }
+    request.onerror = () => reject(request.error)
+  })
+}
+
+async function replacePersistentData(data: PersistedData): Promise<void> {
+  const database = await openDatabase()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(['results', 'vocabulary', 'activity', 'settings'], 'readwrite')
+    const results = tx.objectStore('results')
+    const vocabulary = tx.objectStore('vocabulary')
+    const activity = tx.objectStore('activity')
+    const settings = tx.objectStore('settings')
+
+    results.clear()
+    vocabulary.clear()
+    activity.clear()
+    settings.clear()
+    data.results.forEach((entry) => results.put(entry))
+    data.vocabulary.forEach((entry) => vocabulary.put(entry))
+    data.activity.forEach((entry) => activity.put(entry))
+    data.settings.forEach((entry) => settings.put(entry.value, entry.key))
+
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+    tx.onabort = () => reject(tx.error ?? new Error('Import was cancelled'))
+  })
+}
+
+async function saveReadingCompletion(result: ReadingResult, activity: ActivityEntry, recommendedLevel: string): Promise<void> {
+  const database = await openDatabase()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(['results', 'activity', 'settings'], 'readwrite')
+    tx.objectStore('results').put(result)
+    tx.objectStore('activity').put(activity)
+    tx.objectStore('settings').put(recommendedLevel, 'recommendedLevel')
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+    tx.onabort = () => reject(tx.error ?? new Error('Reading completion was cancelled'))
+  })
+}
+
 export const db = {
   getResults: () => getAll<ReadingResult>('results'),
-  saveResult: (result: ReadingResult) => put('results', result),
   getVocabulary: () => getAll<VocabularyEntry>('vocabulary'),
   saveVocabulary: (entry: VocabularyEntry) => put('vocabulary', entry),
   deleteVocabulary: (term: string) => remove('vocabulary', term),
   getActivity: () => getAll<ActivityEntry>('activity'),
   saveActivity: (entry: ActivityEntry) => put('activity', entry),
+  getSettings,
+  replacePersistentData,
+  saveReadingCompletion,
   async getSetting<T>(key: string): Promise<T | undefined> {
     const database = await openDatabase()
     return new Promise((resolve, reject) => {

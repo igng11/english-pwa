@@ -16,7 +16,9 @@ Cada objeto `Reading` contiene:
 - `text`;
 - `targetVocabulary`;
 - `grammar`;
-- `questions` con enunciado, tres opciones e índice correcto.
+- `questions` con enunciado y opciones en inglés, sus traducciones españolas y el mismo índice correcto.
+
+`src/data/sentence-translations.ts` contiene pares explícitos de oración inglesa y traducción española por ID de lectura. Los pares reproducen exactamente las 211 oraciones del corpus; el Reader usa estos límites declarados para obtener el contexto tocado, sin intentar traducir ni reconstruir la oración mediante una API.
 
 ## Dataset actual
 
@@ -58,5 +60,7 @@ Las 33 palabras objetivo del dataset tienen definición, traducción española y
 Las selecciones de más de una palabra y menos de 140 caracteres se guardan completas. Se identifican mediante `isPhrase` y aparecen en Saved phrases. La implementación no reduce la expresión a una palabra base.
 
 ## Mantenimiento del contenido
+
+Una lectura sólo está completa cuando incluye texto inglés, traducciones españolas de todo el vocabulario, traducción contextual de cada oración, preguntas y opciones en ambos idiomas. No debe entrar al corpus con cobertura parcial. Las traducciones españolas deben ser naturales y conservar el significado contextual, no calcos palabra por palabra.
 
 Las nuevas lecturas deben ajustarse a la interfaz `Reading`, mantener identificadores estables y conservar preguntas respondibles solamente a partir del texto. Si se añade un nivel, también hay que ampliar `Level` en `src/types/index.ts` y `LEVELS` en `src/utils/progression.ts`.

@@ -1,22 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { dictionary, fallbackDefinition } from '../data/dictionary'
+import { sentenceTranslations, type SentenceTranslation } from '../data/sentence-translations'
 import type { SpeechController } from '../hooks/useSpeechSynthesis'
 import type { Reading, VocabularyEntry } from '../types'
 import { cleanTerm } from '../utils/vocabulary'
 
 type SaveInput = Omit<VocabularyEntry, 'seenCount' | 'successCount' | 'lastSeen' | 'status'>
-type WordSelection = { word: string; sentence: string }
+type WordSelection = { word: string; context: SentenceTranslation }
 
-function sentenceAt(text: string, offset: number) {
-  const sentences = [...text.matchAll(/[^.!?]+(?:[.!?]+|$)/g)]
-  return sentences.find((sentence) => {
-    const start = sentence.index
-    return start <= offset && offset < start + sentence[0].length
-  })?.[0].trim() ?? text.trim()
+function contextAt(text: string, offset: number, contexts: SentenceTranslation[]): SentenceTranslation {
+  let searchFrom = 0
+  for (const context of contexts) {
+    const start = text.indexOf(context[0], searchFrom)
+    if (start >= 0 && start <= offset && offset < start + context[0].length) return context
+    if (start >= 0) searchFrom = start + context[0].length
+  }
+  return [text.trim(), '']
 }
 
-function TokenizedParagraph({ text, onWord }: { text: string; onWord: (selection: WordSelection) => void }) {
+function TokenizedParagraph({ text, contexts, onWord }: { text: string; contexts: SentenceTranslation[]; onWord: (selection: WordSelection) => void }) {
   let offset = 0
 
   return <p>{text.split(/(\s+)/).map((token, index) => {
@@ -24,7 +27,7 @@ function TokenizedParagraph({ text, onWord }: { text: string; onWord: (selection
     offset += token.length
     if (/^\s+$/.test(token)) return token
 
-    const selection = { word: token, sentence: sentenceAt(text, tokenOffset) }
+    const selection = { word: token, context: contextAt(text, tokenOffset, contexts) }
     return <span className="reader-word" role="button" tabIndex={0} key={`${token}-${index}`} onClick={() => onWord(selection)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onWord(selection) } }}>{token}</span>
   })}</p>
 }
@@ -33,6 +36,8 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
   const [progress, setProgress] = useState(0)
   const [activeWord, setActiveWord] = useState('')
   const [activeSentence, setActiveSentence] = useState('')
+  const [activeSentenceEs, setActiveSentenceEs] = useState('')
+  const [showSentenceEs, setShowSentenceEs] = useState(false)
   const [selection, setSelection] = useState('')
   const [notice, setNotice] = useState('')
   const [confirmRemoval, setConfirmRemoval] = useState(false)
@@ -44,6 +49,8 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
     speech.cancel()
     setActiveWord('')
     setActiveSentence('')
+    setActiveSentenceEs('')
+    setShowSentenceEs(false)
     setConfirmRemoval(false)
   }
 
@@ -92,7 +99,9 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
     speech.cancel()
     setSelection('')
     setActiveWord(word)
-    setActiveSentence(selection.sentence)
+    setActiveSentence(selection.context[0])
+    setActiveSentenceEs(selection.context[1])
+    setShowSentenceEs(false)
     setConfirmRemoval(false)
   }
 
@@ -126,7 +135,7 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
         <div className="reader-meta"><span className="level-pill">{reading.level}</span><span>{reading.topic}</span><span>{reading.estimatedMinutes} min</span></div>
         <h1>{reading.title}</h1>
         <p className="reader-hint">Tap a word for Spanish and a simple definition. Select a longer expression to save it.</p>
-        <div className="article-copy" ref={articleCopyRef}>{reading.text.split('\n\n').map((paragraph) => <TokenizedParagraph key={paragraph.slice(0, 28)} text={paragraph} onWord={openWord} />)}</div>
+        <div className="article-copy" ref={articleCopyRef}>{reading.text.split('\n\n').map((paragraph) => <TokenizedParagraph key={paragraph.slice(0, 28)} text={paragraph} contexts={(sentenceTranslations[reading.id] ?? []).filter(([english]) => paragraph.includes(english))} onWord={openWord} />)}</div>
         <aside className="reading-notes">
           <div><span>Target words</span><p>{reading.targetVocabulary.join(' · ')}</p></div>
           <div><span>Grammar in context</span><p>{reading.grammar.map((item) => item.replaceAll('-', ' ')).join(' · ')}</p></div>
@@ -144,7 +153,11 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
           </div>}
           <p className="spanish"><span>Spanish</span>{definition.spanish}</p>
           <p className="definition">{definition.definition}</p><p className="example">“{definition.example}”</p>
-          {speech.available && <button type="button" className="sentence-audio-button" aria-label="Listen to sentence" onClick={() => speech.speak(activeSentence)}><span aria-hidden="true">🔊</span> Listen to sentence</button>}
+          <div className="sentence-context"><span>Context</span><p>“{activeSentence}”</p>
+            {speech.available && <button type="button" className="sentence-audio-button" aria-label="Listen to sentence" onClick={() => speech.speak(activeSentence)}><span aria-hidden="true">🔊</span> Listen to sentence</button>}
+            {activeSentenceEs && <button type="button" className="sentence-translation-toggle" aria-expanded={showSentenceEs} onClick={() => setShowSentenceEs((visible) => !visible)}>{showSentenceEs ? 'Ocultar oración en español' : 'Ver oración en español'}</button>}
+            {showSentenceEs && <p className="sentence-translation" lang="es">{activeSentenceEs}</p>}
+          </div>
           <div className="sheet-actions"><button className="secondary-button" onClick={() => saveWord(true)}>I know it</button><button className="primary-button" onClick={() => saveWord(false)}>Learning</button></div>
           {savedEntry && <div className="reader-vocabulary-actions">
             {!confirmRemoval ? <button className="text-button danger-text" onClick={() => setConfirmRemoval(true)}>Remove from vocabulary</button> : <div className="inline-confirmation" role="group" aria-label={`Confirm removal of ${activeWord}`}>

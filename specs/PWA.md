@@ -40,3 +40,9 @@ El Reader usa exclusivamente Web Speech API (`speechSynthesis` y `SpeechSynthesi
 La voz elegida se guarda en el object store `settings` de IndexedDB mediante `voiceURI` y, como respaldo, `name + lang`. Cada utterance asigna explícitamente el objeto de voz resuelto y su locale. Palabra, oración y preview pasan por la misma función, usan velocidad natural `1` y cancelan cualquier reproducción anterior.
 
 Las voces instaladas o descargadas en iOS no siempre coinciden con las que WebKit expone a una PWA. Si la voz guardada deja de estar disponible, la aplicación usa una voz inglesa marcada como default, luego una `en-US` o finalmente la primera voz inglesa disponible. Si la API o una voz inglesa no están disponibles, los controles de audio no se muestran y el flujo de lectura continúa sin errores visibles.
+
+## Backup local
+
+Progress permite exportar un documento JSON con `backupVersion: 1`, `databaseVersion: 1`, fecha de exportación y los stores lógicos `results`, `vocabulary`, `activity` y `settings`. En dispositivos compatibles se comparte como archivo mediante Web Share API; el fallback crea un Blob descargable con nombre `english-pwa-backup-YYYY-MM-DD.json`.
+
+Import valida aplicación, versión, estructura y claves únicas antes de mostrar el resumen y pedir confirmación. El reemplazo usa una única transacción IndexedDB sobre los cuatro stores, de modo que un error no puede dejar una restauración parcial. La operación no cambia nombres de stores ni IDs de lecturas.
