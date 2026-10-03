@@ -146,7 +146,7 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
   }
 
   return (
-    <main className="reader-page page-enter">
+    <main className="reader-page">
       <div className="reader-progress" aria-label={`${progress}% of article read`}><span style={{ width: `${progress}%` }} /></div>
       <header className="reader-toolbar" ref={toolbarRef}><button className="back-button" onClick={closeReader}>← Library</button><span>{progress}% read</span></header>
       <article className="reader-article">

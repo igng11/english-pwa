@@ -53,9 +53,9 @@ La navegación principal cambia componentes mediante renderizado condicional. Re
 
 ## Capas del Reader
 
-El avance de lectura se calcula contra los límites reales de `.article-copy`, no contra la altura total del documento. Un listener pasivo de scroll agrupado mediante `requestAnimationFrame` limita actualizaciones; resize vuelve a medir el contenido y un cambio de `reading.id` lleva el scroll y el indicador a cero.
+El avance de lectura se calcula contra los límites reales de `.article-copy`, no contra la altura total del documento. Un listener pasivo de scroll agrupado mediante `requestAnimationFrame` limita actualizaciones; resize vuelve a medir el contenido y un cambio de `reading.id` lleva el scroll y el indicador a cero. La línea de progreso permanece fija y el toolbar con el porcentaje usa `position: sticky`; el Reader no aplica una animación con `transform`, porque eso convertiría al contenedor en referencia de los elementos fixed y haría que desaparecieran al desplazarse.
 
-El panel de vocabulario se renderiza mediante un portal de React directamente en `document.body`. Así, el backdrop y el bottom sheet `position: fixed` no quedan contenidos por el `transform` de la animación de entrada del Reader. En móvil el panel se fija al borde inferior, respeta las safe areas y usa unidades de viewport dinámico; en escritorio se centra como diálogo.
+El panel de vocabulario se renderiza mediante un portal de React directamente en `document.body`. Así, el backdrop y el bottom sheet `position: fixed` quedan fuera de contextos de apilamiento u overflow propios de la página. En móvil el panel se fija al borde inferior, respeta las safe areas y usa unidades de viewport dinámico; en escritorio se centra como diálogo.
 
 Las palabras del texto son spans seleccionables con semántica y acceso por teclado, no botones nativos, para no interferir con la selección de texto de iOS/Safari. Un tap sin selección abre el panel de palabra. La selección de frases se observa mediante `selectionchange` y `window.getSelection()`, se limita al cuerpo de la lectura y requiere dos o más palabras. Esto permite que la acción `Save phrase` se actualice también al mover los handles nativos después de una pulsación larga.
 

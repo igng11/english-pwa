@@ -231,9 +231,9 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .backup-notice { color: var(--success); font-weight: 700; margin: 14px 0 0; }
 
 .reader-page { min-height: 100vh; background: var(--bg); padding-bottom: 80px; }
-.reader-progress { position: fixed; z-index: 50; left: 0; top: 0; right: 0; height: 3px; background: var(--surface-2); }
+.reader-progress { position: fixed; z-index: 51; left: 0; top: env(safe-area-inset-top, 0px); right: 0; height: 3px; background: var(--surface-2); }
 .reader-progress span { display: block; height: 100%; background: var(--gold); transition: width .15s; }
-.reader-toolbar { width: min(900px, 90vw); margin: 0 auto; height: 72px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .8rem; }
+.reader-toolbar { position: sticky; z-index: 50; top: 0; width: 100%; height: calc(72px + env(safe-area-inset-top, 0px)); margin: 0; padding: env(safe-area-inset-top, 0px) max(5vw, calc((100vw - 900px) / 2)); display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .8rem; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px); }
 .back-button, .text-button { border: 0; background: transparent; padding: 10px 0; cursor: pointer; color: var(--muted); }
 .back-button:hover, .text-button:hover { color: var(--ink); }
 .reader-article { width: min(760px, 88vw); margin: 0 auto; }
