@@ -239,7 +239,6 @@ select { color: var(--ink); background: var(--bg); border: 1px solid var(--line)
 .reader-article { width: min(760px, 88vw); margin: 0 auto; }
 .reader-meta { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; margin-top: 42px; }
 .reader-article > h1 { font: 600 clamp(2.7rem, 8vw, 5.4rem)/.98 'Source Serif 4', serif; letter-spacing: -.05em; margin: 24px 0 18px; text-wrap: balance; }
-.reader-hint { color: var(--muted); border-left: 2px solid var(--gold); padding-left: 14px; line-height: 1.5; margin-bottom: 48px; }
 .article-copy { user-select: text; }
 .article-copy p { font: 400 clamp(1.2rem, 2.7vw, 1.38rem)/1.86 'Source Serif 4', serif; margin-bottom: 1.65em; }
 .reader-word { display: inline; margin: 0; padding: 0; color: inherit; background: transparent; font: inherit; line-height: inherit; cursor: pointer; text-align: left; -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }

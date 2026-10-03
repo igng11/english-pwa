@@ -1,6 +1,7 @@
 import { cleanTerm } from '../utils/vocabulary'
 import { readings } from './readings'
 import { spanishTranslations } from './translations-es'
+import { newSpanishTranslations } from './translations-new-es'
 
 export interface Definition { definition: string; spanish: string; example: string }
 
@@ -52,6 +53,30 @@ const curatedDictionary: Record<string, Definition> = {
 }
 
 const readingExamples = new Map<string, string>()
+const allSpanishTranslations = { ...spanishTranslations, ...newSpanishTranslations }
+
+function translationFor(term: string) {
+  const direct = allSpanishTranslations[term]
+  if (direct) return direct
+
+  const candidates = new Set<string>()
+  if (term.endsWith("'s")) candidates.add(term.slice(0, -2))
+  if (term.endsWith('ies')) candidates.add(`${term.slice(0, -3)}y`)
+  if (term.endsWith('es')) { candidates.add(term.slice(0, -1)); candidates.add(term.slice(0, -2)) }
+  if (term.endsWith('s')) candidates.add(term.slice(0, -1))
+  if (term.endsWith('ied')) candidates.add(`${term.slice(0, -3)}y`)
+  if (term.endsWith('ed')) { candidates.add(term.slice(0, -2)); candidates.add(`${term.slice(0, -1)}`) }
+  if (term.endsWith('ing')) {
+    const stem = term.slice(0, -3)
+    candidates.add(stem)
+    candidates.add(`${stem}e`)
+    if (stem.at(-1) === stem.at(-2)) candidates.add(stem.slice(0, -1))
+  }
+
+  for (const candidate of candidates) {
+    if (allSpanishTranslations[candidate]) return allSpanishTranslations[candidate]
+  }
+}
 
 for (const reading of readings) {
   for (const sentence of reading.text.match(/[^.!?]+[.!?]?/g) ?? []) {
@@ -65,7 +90,7 @@ for (const reading of readings) {
 
 const coveredReadingDictionary = Object.fromEntries(
   [...readingExamples].flatMap(([term, example]) => {
-    const spanish = spanishTranslations[term]
+    const spanish = translationFor(term)
     if (!spanish) return []
 
     return [[term, {

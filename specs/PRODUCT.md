@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Steadily es una PWA personal para mejorar la comprensión lectora en inglés de forma progresiva. La versión actual cubre los niveles internos A2.1 a A2.4 y prepara la base para continuar hacia B1 sin bloquear contenido.
+Steadily es una PWA personal para mejorar la comprensión lectora en inglés de forma progresiva. La versión actual cubre los niveles internos A2.1 a B1.1 sin bloquear contenido.
 
 La actividad principal es leer textos graduados. El vocabulario, las preguntas de comprensión y las estadísticas existen para apoyar esa actividad, no para reemplazarla.
 
@@ -11,7 +11,7 @@ La actividad principal es leer textos graduados. El vocabulario, las preguntas d
 La aplicación tiene cuatro secciones visibles:
 
 - **Today:** recomienda la primera lectura todavía no completada del nivel actual. Si todas están completadas, reutiliza la que lleve más tiempo sin completarse.
-- **Read:** muestra las 11 lecturas y permite filtrar por nivel, tema y estado de finalización.
+- **Read:** muestra las 41 lecturas y permite filtrar por nivel, tema y estado de finalización.
 - **Words:** abre en Learning y ofrece filtros compactos para Learning, Almost known, Known, All y Phrases. Cada entrada muestra primero palabra, traducción y estado; al expandir una única fila aparecen contexto, pronunciación con la voz elegida, métricas resumidas y las acciones para marcar como conocida o eliminar con confirmación. Las definiciones genéricas y el selector manual de estado no forman parte de esta vista de repaso.
 - **Progress:** abre como dashboard compacto con nivel de lectura recomendado, racha real hacia el siguiente nivel, resumen semanal, camino por los niveles disponibles, calendario, comprensión por nivel y acceso directo a Words.
 - **Settings dentro de Progress:** una vista secundaria, sin tab propia, contiene Voice y Backup. Permite elegir una voz inglesa expuesta por el dispositivo y exportar o restaurar los datos locales con las implementaciones existentes.
@@ -19,7 +19,7 @@ La aplicación tiene cuatro secciones visibles:
 ## Flujo de lectura
 
 1. El usuario abre una lectura desde Today o Read.
-2. El Reader muestra el contenido en una columna enfocada y calcula el avance según el scroll.
+2. El Reader muestra el contenido en una columna enfocada. El indicador empieza en 0% al llegar al texto, avanza sólo según el recorrido del cuerpo del artículo y llega a 100% al alcanzar su final; metadatos, notas y acciones posteriores no inflan el cálculo.
 3. Cada palabra se puede tocar para escucharla y ver, en este orden, la traducción al español, una definición simple en inglés y un ejemplo en inglés. También se puede escuchar la oración real que la contiene y solicitar su traducción contextual; ambas reproducciones usan la misma voz elegida.
 4. Una selección nativa de dos o más palabras muestra la acción `Save phrase` y se puede guardar completa.
 5. Al finalizar se responden tres preguntas de opción múltiple. Cada pregunta permanece inicialmente en inglés y permite revelar localmente la pregunta y sus opciones en español.

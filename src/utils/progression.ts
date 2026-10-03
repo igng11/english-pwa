@@ -1,6 +1,6 @@
 import type { Level, ReadingResult } from '../types'
 
-export const LEVELS: Level[] = ['A2.1', 'A2.2', 'A2.3', 'A2.4']
+export const LEVELS: Level[] = ['A2.1', 'A2.2', 'A2.3', 'A2.4', 'A2.5', 'A2.6', 'A2.7', 'A2.8', 'B1.1']
 const STRONG_READING_SCORE = 80
 
 export function getStrongReadingStreak(results: ReadingResult[], current: Level): number {

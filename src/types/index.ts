@@ -1,5 +1,5 @@
-export type Level = 'A2.1' | 'A2.2' | 'A2.3' | 'A2.4'
-export type Topic = 'Technology' | 'Programming' | 'Work' | 'Business' | 'Daily Life' | 'Travel' | 'Culture' | 'Short Stories'
+export type Level = 'A2.1' | 'A2.2' | 'A2.3' | 'A2.4' | 'A2.5' | 'A2.6' | 'A2.7' | 'A2.8' | 'B1.1'
+export type Topic = 'Technology' | 'Programming' | 'Work' | 'Business' | 'Daily Life' | 'Travel' | 'Culture' | 'Short Stories' | 'AI' | 'Science' | 'Society' | 'Economy' | 'Environment'
 export type VocabularyStatus = 'learning' | 'almost-known' | 'known'
 
 export interface Question {

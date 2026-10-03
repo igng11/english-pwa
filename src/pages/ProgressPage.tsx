@@ -92,9 +92,9 @@ export function ProgressPage({ level, results, vocabulary, activity, speech, get
             </div>
             <small>{strongReadingStreak} of 3 strong readings</small>
           </> : <>
-            <span>Next goal</span>
-            <strong className="future-goal">B1</strong>
-            <small>Future content goal — not yet available</small>
+            <span>Current corpus milestone</span>
+            <strong className="future-goal">B1.1</strong>
+            <small>More B1 levels can be added later</small>
           </>}
         </div>
       </section>
@@ -118,7 +118,7 @@ export function ProgressPage({ level, results, vocabulary, activity, speech, get
               return <li className={state} aria-current={state === 'current' ? 'step' : undefined} key={item}><span>{state === 'reached' ? '✓' : state === 'current' ? '●' : '○'}</span><strong>{item}</strong></li>
             })}
           </ol>
-          <p className="b1-goal">B1 goal <span aria-hidden="true">→</span><small>Future corpus</small></p>
+          <p className="b1-goal">B1 path <span aria-hidden="true">→</span><small>Continues beyond B1.1</small></p>
         </section>
       </div>
 

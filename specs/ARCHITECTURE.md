@@ -21,7 +21,8 @@ public/
   sw.js
 src/
   components/     Lector y componentes reutilizables del flujo
-  data/           Lecturas y diccionario local
+  data/           Lecturas, traducciones y diccionario local
+scripts/          Validación estructural y de cobertura del corpus
   hooks/          Coordinación entre estado React y persistencia
   pages/          Today, Read, Words y Progress
   services/       Acceso aislado a IndexedDB
@@ -39,7 +40,7 @@ specs/            Documentación técnica y de producto
 
 `useSpeechSynthesis` centraliza la lista asíncrona de voces inglesas, la resolución de la preferencia guardada y todas las reproducciones de palabra, oración y preview. Reader y Voice Settings consumen el mismo controlador, por lo que no mantienen implementaciones de speech independientes.
 
-El contenido estático entra desde `src/data/readings.ts` y `src/data/dictionary.ts`. Los tipos compartidos están en `src/types/index.ts`. Las reglas puras se mantienen en `src/utils/`.
+El contenido estático entra desde `src/data/readings.ts` y `src/data/dictionary.ts`. Las 11 lecturas originales conservan intactos sus IDs y textos; las 30 nuevas se organizan por tramos en `new-content-a24-a25.ts`, `new-content-a26-a27.ts` y `new-content-a28-b11.ts`. `new-content-model.ts` construye el modelo de lectura y sus pares de oración desde una única fuente bilingüe, evitando que texto y traducciones se desincronicen. Los tipos compartidos están en `src/types/index.ts`. Las reglas puras se mantienen en `src/utils/`.
 
 ## Routing
 
@@ -51,6 +52,8 @@ No hay router de URL. `App.tsx` mantiene dos estados:
 La navegación principal cambia componentes mediante renderizado condicional. Reader, test y resultado reemplazan temporalmente el shell principal. Esta estrategia es suficiente para el MVP, evita una dependencia y no promete URLs compartibles ni historial del navegador.
 
 ## Capas del Reader
+
+El avance de lectura se calcula contra los límites reales de `.article-copy`, no contra la altura total del documento. Un listener pasivo de scroll agrupado mediante `requestAnimationFrame` limita actualizaciones; resize vuelve a medir el contenido y un cambio de `reading.id` lleva el scroll y el indicador a cero.
 
 El panel de vocabulario se renderiza mediante un portal de React directamente en `document.body`. Así, el backdrop y el bottom sheet `position: fixed` no quedan contenidos por el `transform` de la animación de entrada del Reader. En móvil el panel se fija al borde inferior, respeta las safe areas y usa unidades de viewport dinámico; en escritorio se centra como diálogo.
 
@@ -81,7 +84,7 @@ Progress presenta la misma regla de progresión sin convertirla en un porcentaje
 
 El resumen semanal usa la semana local de lunes a domingo. Las lecturas y días activos provienen de eventos `reading` en `activity`; las palabras se suman por evento usando el tamaño de su lectura; y la comprensión promedia sólo los resultados persistidos cuya fecha cae dentro de esa semana. Como `results` conserva el último resultado por ID de lectura, la interfaz no inventa puntuaciones históricas que ya no existen.
 
-`src/utils/progression.ts` define el orden `A2.1 → A2.2 → A2.3 → A2.4`.
+`src/utils/progression.ts` define el orden `A2.1 → A2.2 → A2.3 → A2.4 → A2.5 → A2.6 → A2.7 → A2.8 → B1.1`.
 
 Para el nivel recomendado actual:
 

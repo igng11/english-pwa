@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { readings } from '../data/readings'
 import type { Reading, ReadingResult } from '../types'
 import { ReadingCard } from '../components/ReadingCard'
+import { LEVELS } from '../utils/progression'
 
 export function ReadPage({ results, onOpen }: { results: ReadingResult[]; onOpen: (reading: Reading) => void }) {
   const [level, setLevel] = useState('All')
@@ -13,7 +14,7 @@ export function ReadPage({ results, onOpen }: { results: ReadingResult[]; onOpen
     <main className="library-page page-enter">
       <header className="page-heading"><div className="eyebrow">Reading library</div><h1>Choose your next text.</h1><p>Nothing is locked. Move up, revisit an easier level, or follow your curiosity.</p></header>
       <section className="filters" aria-label="Reading filters">
-        <label>Level<select value={level} onChange={(event) => setLevel(event.target.value)}><option>All</option>{['A2.1', 'A2.2', 'A2.3', 'A2.4'].map((item) => <option key={item}>{item}</option>)}</select></label>
+        <label>Level<select value={level} onChange={(event) => setLevel(event.target.value)}><option>All</option>{LEVELS.map((item) => <option key={item}>{item}</option>)}</select></label>
         <label>Topic<select value={topic} onChange={(event) => setTopic(event.target.value)}><option>All</option>{[...new Set(readings.map((item) => item.topic))].map((item) => <option key={item}>{item}</option>)}</select></label>
         <label>Status<select value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>Completed</option><option>Not completed</option></select></label>
       </section>

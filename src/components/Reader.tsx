@@ -42,6 +42,7 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
   const [notice, setNotice] = useState('')
   const [confirmRemoval, setConfirmRemoval] = useState(false)
   const articleCopyRef = useRef<HTMLDivElement>(null)
+  const toolbarRef = useRef<HTMLElement>(null)
   const definition = useMemo(() => dictionary[activeWord] ?? fallbackDefinition, [activeWord])
   const savedEntry = useMemo(() => vocabulary.find((entry) => !entry.isPhrase && entry.term === activeWord), [activeWord, vocabulary])
 
@@ -61,14 +62,31 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
+    setProgress(0)
+    let frame = 0
     const update = () => {
-      const height = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(height > 0 ? Math.min(100, Math.round(window.scrollY / height * 100)) : 0)
+      frame = 0
+      const copy = articleCopyRef.current
+      if (!copy) return
+      const contentTop = window.scrollY + copy.getBoundingClientRect().top
+      const contentBottom = contentTop + copy.offsetHeight
+      const start = contentTop - (toolbarRef.current?.offsetHeight ?? 0)
+      const end = Math.max(start + 1, contentBottom - window.innerHeight)
+      const next = Math.max(0, Math.min(100, Math.round((window.scrollY - start) / (end - start) * 100)))
+      setProgress((current) => current === next ? current : next)
     }
-    window.addEventListener('scroll', update, { passive: true })
-    update()
-    return () => window.removeEventListener('scroll', update)
-  }, [])
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    requestUpdate()
+    return () => {
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [reading.id])
 
   useEffect(() => () => {
     speech.cancel()
@@ -130,11 +148,10 @@ export function Reader({ reading, vocabulary, speech, onClose, onTest, onSaveTer
   return (
     <main className="reader-page page-enter">
       <div className="reader-progress" aria-label={`${progress}% of article read`}><span style={{ width: `${progress}%` }} /></div>
-      <header className="reader-toolbar"><button className="back-button" onClick={closeReader}>← Library</button><span>{progress}% read</span></header>
+      <header className="reader-toolbar" ref={toolbarRef}><button className="back-button" onClick={closeReader}>← Library</button><span>{progress}% read</span></header>
       <article className="reader-article">
         <div className="reader-meta"><span className="level-pill">{reading.level}</span><span>{reading.topic}</span><span>{reading.estimatedMinutes} min</span></div>
         <h1>{reading.title}</h1>
-        <p className="reader-hint">Tap a word for Spanish and a simple definition. Select a longer expression to save it.</p>
         <div className="article-copy" ref={articleCopyRef}>{reading.text.split('\n\n').map((paragraph) => <TokenizedParagraph key={paragraph.slice(0, 28)} text={paragraph} contexts={(sentenceTranslations[reading.id] ?? []).filter(([english]) => paragraph.includes(english))} onWord={openWord} />)}</div>
         <aside className="reading-notes">
           <div><span>Target words</span><p>{reading.targetVocabulary.join(' · ')}</p></div>

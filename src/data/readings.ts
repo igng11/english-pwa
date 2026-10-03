@@ -1,6 +1,7 @@
 import type { Reading } from '../types'
+import { newReadings } from './new-content'
 
-export const readings: Reading[] = [
+const existingReadings: Reading[] = [
   {
     id: 'a2-1-technology-001', title: 'Why We Update Our Phones', level: 'A2.1', topic: 'Technology', estimatedMinutes: 3,
     targetVocabulary: ['update', 'device', 'although'], grammar: ['present-simple', 'adverbs-of-frequency'],
@@ -192,6 +193,8 @@ Six months later, Elena presented a campaign idea to an important client. She ex
     ],
   },
 ]
+
+export const readings: Reading[] = [...existingReadings, ...newReadings]
 
 export const readingById = (id: string) => readings.find((reading) => reading.id === id)
 export const countWords = (text: string) => text.trim().split(/\s+/).length

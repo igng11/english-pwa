@@ -1,6 +1,8 @@
+import { newSentenceTranslations } from './new-content'
+
 export type SentenceTranslation = readonly [english: string, spanish: string]
 
-export const sentenceTranslations: Record<string, SentenceTranslation[]> = {
+const existingSentenceTranslations: Record<string, SentenceTranslation[]> = {
   'a2-1-technology-001': [
     ['Most phones ask us to install updates.', 'La mayoría de los teléfonos nos piden que instalemos actualizaciones.'],
     ['An update is a small package of new software for a device.', 'Una actualización es un pequeño paquete de software nuevo para un dispositivo.'],
@@ -235,3 +237,5 @@ export const sentenceTranslations: Record<string, SentenceTranslation[]> = {
     ['If she waited until she felt completely ready, she might never begin.', 'Si esperara hasta sentirse completamente preparada, quizá nunca comenzaría.'],
   ],
 }
+
+export const sentenceTranslations: Record<string, SentenceTranslation[]> = { ...existingSentenceTranslations, ...newSentenceTranslations }
